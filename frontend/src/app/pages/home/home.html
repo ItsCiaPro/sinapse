@@ -1,1 +1,11 @@
 <p>home works!</p>
+
+@if (currentUser$ | async; as user) {
+   <p>Olá, {{ user.email }}</p>
+}
+
+<button (click)="onLogout()" >Logout</button>
+
+@if (toastMessage !== '') {
+   <p>{{ toastMessage }}</p>
+}

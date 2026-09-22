@@ -1,18 +1,39 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Auth } from '../../services/auth/auth';
+import { inject } from '@angular/core';
 import { Supabase } from '../../services/supabase';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [FormsModule, AsyncPipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home {
-  SupabaseService = Inject(Supabase);
+  private authService = inject(Auth);
+  private supabaseService = inject(Supabase);
+  currentUser$ = this.supabaseService.currentUser$
 
-  constructor(){
-    
-    console.log(this.SupabaseService.ok());
+  toastMessage = '';
+
+  async onLogout() {
+    console.log('ok');
+
+    try {
+
+      const { successMessage, errorMessage } = await this.authService.logOut();
+
+      if (errorMessage) {
+        this.toastMessage = errorMessage ?? '';
+      } else {
+        this.toastMessage = successMessage ?? '';
+      }
+    }
+
+    finally {
+      console.log(this.toastMessage);
+    }
   }
-
 }
