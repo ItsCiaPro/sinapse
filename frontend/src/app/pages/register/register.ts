@@ -20,7 +20,6 @@ export class Register {
   loading = false;
 
   async onSubmit() {
-    console.log('ok');
 
     if (this.passwordConfirm !== this.password) {
       this.toastMessage = 'As senhas não coincidem.';

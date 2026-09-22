@@ -21,5 +21,21 @@ export class Login {
 
   async onSubmit() {
 
+    try {
+      this.loading = true;
+
+      const { successMessage, errorMessage } = await this.authService.logIn(this.email, this.password);
+
+      if (errorMessage) {
+        this.toastMessage = errorMessage ?? '';
+      } else {
+        this.toastMessage = successMessage ?? '';
+      }
+    }
+
+    finally {
+      this.loading = false;
+      console.log(this.toastMessage);
+    }
   }
 }
