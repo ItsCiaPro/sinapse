@@ -4,10 +4,12 @@ import { Auth } from '../../services/auth/auth';
 import { inject } from '@angular/core';
 import { Supabase } from '../../services/supabase';
 import { AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { SidebarNav } from '../../components/sidebar-nav/sidebar-nav';
 
 @Component({
   selector: 'app-home',
-  imports: [FormsModule, AsyncPipe],
+  imports: [FormsModule, AsyncPipe, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
