@@ -92,3 +92,34 @@ main {
    height: 100%;
    background-color: var(--secondary-color);
 }
+
+/* Record tags use the same colors on the home page and timeline. */
+.record-type {
+   display: inline-block;
+   font-size: 1.2rem;
+   font-weight: 600;
+   padding: 6px 10px;
+   color: #5f3b9f;
+   background-color: var(--tertiary-color);
+   border-radius: 20px;
+}
+
+.record-type[data-type="Consulta"] {
+   color: #5f3b9f;
+   background-color: #eee7fa;
+}
+
+.record-type[data-type="Cirurgia"] {
+   color: #9e4325;
+   background-color: #ffe9df;
+}
+
+.record-type[data-type="Exame"] {
+   color: #21636c;
+   background-color: #dff1f1;
+}
+
+.record-type[data-type="Prescrição"] {
+   color: #8b385c;
+   background-color: #f8e4ed;
+}
