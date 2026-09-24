@@ -2,11 +2,9 @@
   <div class="share-content">
     <header class="share-intro">
       <div>
-        <span class="eyebrow">COMPARTILHAMENTO SEGURO</span>
-        <h1>Seu histórico, sob seu controle.</h1>
-        <p>Crie um QR Code de demonstração que abre uma página pública com informações ilustrativas.</p>
+        <h1>Compartilhamento</h1>
+        <p>Crie um QR Code para compartilhar com profissionais.</p>
       </div>
-      <span class="intro-icon" aria-hidden="true"><img src="imgs/icons/qrcode.svg" alt=""></span>
     </header>
 
     <div class="share-grid">
@@ -15,9 +13,8 @@
           <div>
             <span class="eyebrow">NOVO ACESSO</span>
             <h2 id="share-card-title">Compartilhar via QR Code</h2>
-            <p>Configure a página de exemplo que será aberta ao escanear.</p>
+            <p>Configure a página que será aberta ao escanear.</p>
           </div>
-          <span class="status-pill">Demonstração</span>
         </div>
 
         <div class="share-settings">
@@ -37,7 +34,7 @@
           <div class="access-options">
             <div class="setting-heading">
               <h3>Permissões de acesso</h3>
-              <p>Escolha os tópicos da página ilustrativa.</p>
+              <p>Escolha os tópicos que serão compartilhados</p>
             </div>
             <label class="option-row" for="share-history">
               <span class="option-copy"><strong>Histórico de saúde</strong><small>Consultas e cirurgias registradas</small></span>
@@ -64,7 +61,6 @@
         </div>
         <div class="card-footer">
           <button type="button" class="generate-button" [disabled]="!historyEnabled && !examsEnabled && !prescriptionsEnabled" (click)="generate()">{{ activeAccess ? 'Gerar novo QR Code' : 'Gerar QR Code' }}</button>
-          <p>O código contém apenas um link para dados fictícios. Nenhum registro real é compartilhado.</p>
         </div>
       </section>
 

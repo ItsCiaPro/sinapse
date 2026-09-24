@@ -65,7 +65,7 @@
             <img [src]="qrImage" alt="QR Code ativo para a página pública de demonstração">
             <div>
                <span class="code-badge">Ativo · demonstração</span>
-               <p>Abra a página ilustrativa em outro aparelho.</p>
+               <p>Compartilhe seu histórico com outro aparelho.</p>
                <small>Prazo até {{ activeAccess.expiresAt | date:'dd/MM/yyyy HH:mm' }}</small>
                <a [href]="activeAccess.url" target="_blank" rel="noopener noreferrer">Abrir página do QR ↗</a>
                <button type="button" class="copy-active-link" (click)="copyActiveLink()">{{ copiedLink ? 'Link copiado' : 'Copiar link' }}</button>
@@ -80,7 +80,6 @@
          </div>
       }
       <a class="manage-code" routerLink="/share">{{ activeAccess ? 'Gerenciar QR Code' : 'Gerar QR Code' }}</a>
-      <p class="code-note">O QR abre apenas dados fictícios; não compartilha seu prontuário.</p>
    </section>
    </div>
 

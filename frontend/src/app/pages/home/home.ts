@@ -4,12 +4,12 @@ import { Auth } from '../../services/auth/auth';
 import { inject } from '@angular/core';
 import { Supabase } from '../../services/supabase';
 import { AsyncPipe, DatePipe, KeyValuePipe } from '@angular/common';
-import QRCode from 'qrcode';
 import { DemoAccess, DemoShare } from '../../services/demo-share';
 import { RouterLink } from '@angular/router';
 import { filtros } from '../../models/enums/filters';
 import { Data } from '../../models/data/data';
 import { documentTypeColor } from '../../models/enums/document-enums';
+import QRCode from 'qrcode';
 
 @Component({
   selector: 'app-home',

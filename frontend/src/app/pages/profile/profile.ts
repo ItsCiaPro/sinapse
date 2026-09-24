@@ -37,18 +37,6 @@ export class Profile {
         { sectionTitle: 'Naturalidade', sectionData: 'Salvador' },
       ],
     },
-    {
-      sectionTitle: 'Convênio',
-      sectionRows: [
-        { sectionTitle: 'Operadora', sectionData: 'Bradesco Saúde' },
-        { sectionTitle: 'Tipo', sectionData: 'Particular' },
-        { sectionTitle: 'Plano', sectionData: 'Top Nacional R1' },
-        { sectionTitle: 'Nº da carteirinha', sectionData: '852.190.432109.008' },
-        { sectionTitle: 'Validade', sectionData: '12/2028' },
-        { sectionTitle: 'Acomodação', sectionData: 'Apartamento' },
-        { sectionTitle: 'Titular', sectionData: 'Helena Duarte' },
-      ],
-    },
   ];
 
   clinicalAlerts: ClinicalAlert[] = [
