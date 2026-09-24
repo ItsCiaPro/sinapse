@@ -1,5 +1,46 @@
-
 <main>
+
+   <h2 class="home-title">Carteirinhas</h2>
+
+   <div class="carousel-wrapper">
+
+      <div class="carousel">
+         @for (doc of documents; track doc.issuer.name; let i = $index) {
+         <div class="item" [style.background-color]="documentsColor[doc.documentType]">
+            <div class="item-header">
+               <div class="item-top">
+                  <h1>{{ doc.documentType }}</h1>
+                  <h1>{{ doc.status }}</h1>
+               </div>
+
+               <div class="item-middle">
+                  <h1>{{ doc.issuer.name }}</h1>
+
+                  @for (holderInfo of doc.holder | keyvalue; track holderInfo.key) {
+                  <h2>{{ holderInfo.value }}</h2>
+                  }
+               </div>
+            </div>
+
+            @if (isExpanded(i)) {
+            <div class="item-bottom">
+               @for (cardInfo of doc.cardDetails | keyvalue; track cardInfo.key) {
+               <h2>{{ cardInfo.key }}: {{ cardInfo.value }}</h2>
+               }
+            </div>
+            } @else {
+            <button class="show-details-btn" (click)="toggleDetails(i)">
+               <img src="imgs/icons/down-arrow.svg" alt="">
+               Mostrar Detalhes
+            </button>
+            }
+
+         </div>
+         }
+      </div>
+
+
+   </div>
 
    <h2 class="home-title">Histórico de saúde</h2>
 

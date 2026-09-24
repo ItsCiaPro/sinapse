@@ -11,6 +11,71 @@ main {
    overflow-y: auto;
 }
 
+.carousel-wrapper {
+   display: flex;
+   flex-direction: row;
+   background-color: rgba(255, 0, 0, 0.089);
+   height: 200px;
+}
+
+.carousel {
+   display: flex;
+   flex-direction: row;
+   gap: 20px;
+   overflow-x: auto;
+}
+
+.carousel .item {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   flex-shrink: 0;
+   width: 300px;
+   border-radius: 20px;
+   padding: 20px;
+}
+
+.carousel .item-top {
+   display: flex;
+   flex-direction: row;
+   width: 100%;
+   margin-bottom: 5px;
+   justify-content: space-between;
+}
+
+.carousel .item-top h1 {
+   font-size: 2rem;
+   font-weight: 600;
+}
+
+.carousel .item-middle h1 {
+   font-size: 2rem;
+}
+
+.carousel .item-middle h2 {
+   font-size: 1.5rem;
+}
+
+.carousel .show-details-btn {
+   display: flex;
+   width: fit-content;
+   border: none;
+   border-radius: 9999px;
+   background-color: transparent;
+   padding: 4px;
+   align-items: center;
+}
+
+.carousel .show-details-btn:hover {
+   background-color: rgba(255, 255, 255, 0.479);
+}
+
+.carousel .show-details-btn img {
+   width: 30px;
+}
+
+
+
 .home-title {
    font-size: 2rem;
    font-weight: bold;

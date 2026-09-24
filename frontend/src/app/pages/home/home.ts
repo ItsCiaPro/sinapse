@@ -3,16 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { Auth } from '../../services/auth/auth';
 import { inject } from '@angular/core';
 import { Supabase } from '../../services/supabase';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, KeyValuePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-
-enum filtros {
-  tudo = 'Tudo',
-  consulta = 'Consulta',
-  exame = 'Exame',
-  cirurgia = 'Cirurgia',
-  prescricao = 'Prescrição',
-};
+import { filtros } from '../../models/enums/filters';
+import { Data } from '../../models/data/data';
+import { documentTypeColor } from '../../models/enums/document-enums';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +15,7 @@ enum filtros {
     FormsModule,
     AsyncPipe,
     RouterLink,
+    KeyValuePipe,
   ],
   templateUrl: './home.html',
   styleUrl: './home.css',
@@ -30,81 +26,26 @@ export class Home {
   currentUser$ = this.supabaseService.currentUser$
 
   toastMessage = '';
-  currentFilter : string = filtros.tudo;
+  private data = inject(Data);
+  currentFilter: string = filtros.tudo;
 
-  history = [
+  history = this.data.getHistory;
+  documents = this.data.getDocuments;
+  documentsColor = documentTypeColor;
 
-    {
-      type: filtros.consulta,
-      title: 'Avaliação de rotina',
-      description: 'Dra. Camila Rocha - Clinica Vital',
-      date: '12 Mar. 2026',
-      isOpen: false,
+  expandedIndexes = new Set<number>();
 
-      detail: [
-        {
-          name: 'Localização',
-          content: 'Clinica Vital - Unidade Pinheiros',
-        },
-        {
-          name: 'Descrição',
-          content: 'Pressão arterial controlada. Manter medicação e retornar em 90 dias com exames de rotina.'
-        }
-      ],
+  toggleDetails(index: number): void {
+    if (this.expandedIndexes.has(index)) {
+      this.expandedIndexes.delete(index);
+    } else {
+      this.expandedIndexes.add(index);
+    }
+  }
 
-      attatchments: [
-        { title: 'avaliação-helena.pdf', type: 'pdf' }
-      ],
-
-    },
-
-    {
-      type: filtros.prescricao,
-      title: 'Losartana 50mg - 1x/dia',
-      description: 'Dra. Camila Rocha - 30 dias',
-      date: '02 Fev. 2026',
-      isOpen: false,
-
-      detail: [
-        {
-          name: 'Descrição',
-          content: 'Tomar pela manhã em jejum. Renovação sujeita a nova avaliação.'
-        }
-      ],
-
-      attatchments: [
-      ],
-
-    },
-
-    {
-      type: filtros.cirurgia,
-      title: 'Apendicectomia',
-      description: 'Dra. Camila Rocha',
-      date: '30 Out. 2026',
-      isOpen: false,
-
-      detail: [
-        {
-          name: 'Cuidados Antes',
-          content: 'Jejum absoluto 8 horas antes'
-        },
-        {
-          name: 'Cuidados Após',
-          content: 'Evitar esforço físico, alimentação leve'
-        },
-        {
-          name: 'Prescrições',
-          content: 'Analgésicos e anti-inflamatórios'
-        }
-      ],
-
-      attatchments: [
-      ],
-
-    },
-
-  ]
+  isExpanded(index: number): boolean {
+    return this.expandedIndexes.has(index);
+  }
 
   async onLogout() {
     console.log('ok');
