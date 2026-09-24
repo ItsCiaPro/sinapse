@@ -4,4 +4,70 @@
 
 <main>
 
+   <h2 class="home-title">Histórico de saúde</h2>
+
+   <span class="filters-wrapper">
+      <div class="filter-container">
+         Todos
+      </div>
+
+      <div class="filter-container">
+         Consultas
+      </div>
+
+      <div class="filter-container">
+         Exames
+      </div>
+
+      <div class="filter-container">
+         Cirurgias
+      </div>
+
+      <div class="filter-container">
+         Precrições
+      </div>
+   </span>
+
+   <div class="records">
+      @for (record of history; track record.title) {
+      <div class="record-container" (click)="record.isOpen = !record.isOpen" [class.open]="record.isOpen">
+         <div class="record-top">
+            <span class="record-type">{{ record.type }}</span>
+            <span class="record-date">{{ record.date }}</span>
+         </div>
+
+         <h2 class="record-title">{{ record.title }}</h2>
+         <h3 class="record-description">{{ record.description }}</h3>
+
+         <div class="record-content">
+            @for (detail of record.detail; track detail.name) {
+            <span>
+               <h3 class="record-content-label">{{ detail.name }}:</h3>
+               <h3 class="record-content-data">{{ detail.content }}</h3>
+            </span>
+            }
+
+            @if (record.attatchments && record.attatchments.length > 0) {
+            @for (attatchment of record.attatchments; track attatchment.title) {
+            <div class="record-attatchment">
+               <span>
+                  <img src="imgs/icons/pdf.svg" class="attachment-icon" alt="pdf">
+                  <h3 class="attachment-title">{{ attatchment.title }}</h3>
+               </span>
+
+               <div class="attachment-download-btn">
+                  <img src="imgs/icons/download.svg" class="attachment-icon" alt="">
+               </div>
+
+            </div>
+            }
+
+            }
+         </div>
+
+
+      </div>
+      }
+   </div>
+
 </main>

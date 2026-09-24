@@ -4,12 +4,10 @@
 */
 
 :root {
-    --bg_1 : #fcfcfc;
-    --border_gray : #fafafa;
-
-    --highlight: #45ae95;
-    
-    --inactive-button: #b6bcbf;
+    --border-grey: rgb(192, 192, 192);
+    --bg-grey: #706C61;
+    --highlight-purple: #855AC9;
+    --counterhighlight-orange: #F78E69;
 
     font-size: 10px;
     font-family: Arial, Helvetica, sans-serif;
@@ -65,11 +63,13 @@ table {
 	border-spacing: 0;
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -86,5 +86,5 @@ main {
    flex-direction: row;
    width: 100%;
    height: 100%;
-   background-color: #f4f7f6;
+   background-color: #f7f4f7;
 }

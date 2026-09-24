@@ -23,6 +23,53 @@ export class Home {
 
   toastMessage = '';
 
+  history = [
+
+    {
+      type: 'Consulta',
+      title: 'Avaliação de rotina',
+      description: 'Dra. Camila Rocha - Clinica Vital',
+      date: '12 Mar. 2026',
+      isOpen: false,
+
+      detail: [
+        {
+          name: 'Localização',
+          content: 'Clinica Vital - Unidade Pinheiros',
+        },
+        {
+          name: 'Descrição',
+          content: 'Pressão arterial controlada. Manter medicação e retornar em 90 dias com exames de rotina.'
+        }
+      ],
+
+      attatchments: [
+        { title: 'avaliação-helena.pdf', type: 'pdf'}
+      ],
+
+    },
+
+    {
+      type: 'Prescrição',
+      title: 'Losartana 50mg - 1x/dia',
+      description: 'Dra. Camila Rocha - 30 dias',
+      date: '02 Fev. 2026',
+      isOpen: false,
+
+      detail: [
+        {
+          name: 'Descrição',
+          content: 'Tomar pela manhã em jejum. Renovação sujeita a nova avaliação.'
+        }
+      ],
+
+      attatchments: [
+      ],
+
+    },
+
+  ]
+
   async onLogout() {
     console.log('ok');
 
