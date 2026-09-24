@@ -1,0 +1,18 @@
+<main class="demo-page">
+  <article class="demo-card">
+    <span class="eyebrow">SINAPSE · DEMONSTRAÇÃO</span>
+    @if (valid) {
+      <h1>Visualização de exemplo</h1>
+      <p>Este QR Code abre uma página pública com dados fictícios. Ele não dá acesso ao prontuário de quem o gerou.</p>
+      <p>A validade é ilustrativa e verificada neste navegador; não representa uma autorização médica segura.</p>
+      <p class="expiry">Prazo indicado: {{ expiresAt | date:'dd/MM/yyyy HH:mm' }}</p>
+      <h2>Informações ilustrativas</h2>
+      @if (scopes.includes('historico')) { <div class="sample"><strong>Histórico</strong><span>Consulta de rotina · Exemplo de atendimento</span></div> }
+      @if (scopes.includes('exames')) { <div class="sample"><strong>Exames</strong><span>Resultado ilustrativo · Sem arquivos reais</span></div> }
+      @if (scopes.includes('prescricoes')) { <div class="sample"><strong>Prescrições</strong><span>Exemplo de prescrição · Sem dados clínicos</span></div> }
+    } @else {
+      <h1>Prazo encerrado</h1>
+      <p>O período indicado neste QR Code de demonstração terminou. Solicite um novo código.</p>
+    }
+  </article>
+</main>

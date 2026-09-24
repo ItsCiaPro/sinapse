@@ -36,6 +36,9 @@
 }
 .qr-icon { width: 70px; height: 70px; margin-bottom: 17px; border-radius: 20px; }
 .qr-icon img { width: 36px; height: 36px; }
+.generated-qr { width: min(100%, 195px); height: auto; border-radius: 10px; margin-bottom: 10px; }
+.copy-link { margin-top: 12px; border: 1px solid #cbb8df; border-radius: 9px; background: white; color: #6944a7; padding: 8px 12px; font-weight: 700; cursor: pointer; }
+.copy-link:focus-visible { outline: 3px solid var(--counterhighlight-orange); }
 .qr-preview strong { font-size: 1.4rem; line-height: 1.35; }
 .qr-preview > span:last-child { margin-top: 8px; color: var(--bg-grey); font-size: 1.2rem; line-height: 1.45; }
 .setting-heading { margin-bottom: 7px; }

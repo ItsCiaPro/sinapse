@@ -1,7 +1,8 @@
 <main>
 
-   <h2 class="home-title">Carteirinhas</h2>
-
+   <div class="dashboard-top">
+   <section class="dashboard-panel" aria-labelledby="cards-title">
+   <h2 class="home-title" id="cards-title">Carteirinhas</h2>
    <div class="carousel-wrapper">
       <button class="carousel-arrow" type="button" aria-label="Documento anterior"
          [disabled]="currentDocumentIndex === 0" (click)="showDocument(currentDocumentIndex - 1)">
@@ -55,6 +56,33 @@
    <p class="carousel-position" aria-live="polite">
       {{ documents.length ? currentDocumentIndex + 1 : 0 }} de {{ documents.length }} documentos
    </p>
+   </section>
+
+   <section class="dashboard-panel qr-panel" aria-labelledby="qr-title">
+      <h2 class="home-title" id="qr-title">QR Code de compartilhamento</h2>
+      @if (activeAccess && qrImage) {
+         <div class="active-code">
+            <img [src]="qrImage" alt="QR Code ativo para a página pública de demonstração">
+            <div>
+               <span class="code-badge">Ativo · demonstração</span>
+               <p>Abra a página ilustrativa em outro aparelho.</p>
+               <small>Prazo até {{ activeAccess.expiresAt | date:'dd/MM/yyyy HH:mm' }}</small>
+               <a [href]="activeAccess.url" target="_blank" rel="noopener noreferrer">Abrir página do QR ↗</a>
+               <button type="button" class="copy-active-link" (click)="copyActiveLink()">{{ copiedLink ? 'Link copiado' : 'Copiar link' }}</button>
+               @if (copyError) { <small>Não foi possível copiar neste navegador.</small> }
+            </div>
+         </div>
+      } @else {
+         <div class="empty-code">
+            <img src="imgs/icons/qrcode.svg" alt="">
+            <p>Nenhum QR Code ativo.</p>
+            <span>Gere um código na página Compartilhar para encontrá-lo aqui ao entrar.</span>
+         </div>
+      }
+      <a class="manage-code" routerLink="/share">{{ activeAccess ? 'Gerenciar QR Code' : 'Gerar QR Code' }}</a>
+      <p class="code-note">O QR abre apenas dados fictícios; não compartilha seu prontuário.</p>
+   </section>
+   </div>
 
    <h2 class="home-title">Histórico de saúde</h2>
 
@@ -80,22 +108,22 @@
 
          <div class="filter-container" [class.active]="currentFilter==='Prescrição'"
             (click)="currentFilter='Prescrição'">
-            Precrições
+            Prescrições
          </div>
       </span>
 
-      <div class="filter-container add-btn">
-         <img src="imgs/icons/add.svg" width="10px" alt="">
-      </div>
+      <a class="filter-container add-btn" routerLink="/history" aria-label="Adicionar registro no histórico">
+         <img src="imgs/icons/add.svg" width="10px" alt=""> Adicionar registro
+      </a>
    </div>
 
    <div class="records">
-      @for (record of history; track record.title) {
+      @for (record of history; track record) {
       @if (currentFilter === 'Tudo' || currentFilter === record.type) {
 
       <div class="record-container" (click)="record.isOpen = !record.isOpen" [class.open]="record.isOpen">
          <div class="record-top">
-            <span class="record-type" [attr.data-type]="record.type">{{ record.type }}</span>
+            <span class="record-type" [attr.data-type]="record.type">{{ record.type }}{{ record.future ? ' · Agendado' : '' }}</span>
             <span class="record-date">{{ record.date }}</span>
          </div>
 
@@ -118,9 +146,11 @@
                   <h3 class="attachment-title">{{ attatchment.title }}</h3>
                </span>
 
-               <div class="attachment-download-btn">
-                  <img src="imgs/icons/download.svg" class="attachment-icon" alt="">
-               </div>
+               @if (attatchment.url) {
+                  <a class="attachment-download-btn" [href]="attatchment.url" [attr.download]="attatchment.title" (click)="$event.stopPropagation()" aria-label="Baixar anexo local">
+                     <img src="imgs/icons/download.svg" class="attachment-icon" alt="">
+                  </a>
+               }
 
             </div>
             }

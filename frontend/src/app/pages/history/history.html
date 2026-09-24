@@ -6,22 +6,22 @@
    <div class="overview-cards">
       <div class="overview-card">
          <h3>Consultas</h3>
-         <h1>2</h1>
+         <h1>{{ count(filters.consulta) }}</h1>
       </div>
 
       <div class="overview-card">
          <h3>Exames</h3>
-         <h1>2</h1>
+         <h1>{{ count(filters.exame) }}</h1>
       </div>
 
       <div class="overview-card">
          <h3>Cirurgias</h3>
-         <h1>2</h1>
+         <h1>{{ count(filters.cirurgia) }}</h1>
       </div>
 
       <div class="overview-card">
-         <h3>Precrições</h3>
-         <h1>2</h1>
+         <h3>Prescrições</h3>
+         <h1>{{ count(filters.prescricao) }}</h1>
       </div>
    </div>
 
@@ -46,22 +46,20 @@
 
          <div class="filter-container" [class.active]="currentFilter==='Prescrição'"
             (click)="currentFilter='Prescrição'">
-            Precrições
+            Prescrições
          </div>
       </span>
 
-      <div class="filter-container add-btn">
-         <img src="imgs/icons/add.svg" width="10px" alt="">
-      </div>
+      <button type="button" class="filter-container add-btn" (click)="openForm()"><img src="imgs/icons/add.svg" width="13" alt=""> Adicionar registro</button>
    </div>
 
    <div class="records">
-      @for (record of history; track record.title) {
+      @for (record of history; track record) {
       @if (currentFilter === 'Tudo' || currentFilter === record.type) {
 
       <div class="record-container" (click)="record.isOpen = !record.isOpen" [class.open]="record.isOpen">
          <div class="record-top">
-            <span class="record-type" [attr.data-type]="record.type">{{ record.type }}</span>
+            <span class="record-type" [attr.data-type]="record.type">{{ record.type }}{{ record.future ? ' · Agendado' : '' }}</span>
             <span class="record-date">{{ record.date }}</span>
          </div>
 
@@ -84,9 +82,11 @@
                   <h3 class="attachment-title">{{ attatchment.title }}</h3>
                </span>
 
-               <div class="attachment-download-btn">
-                  <img src="imgs/icons/download.svg" class="attachment-icon" alt="">
-               </div>
+               @if (attatchment.url) {
+                  <a class="attachment-download-btn" [href]="attatchment.url" [attr.download]="attatchment.title" (click)="$event.stopPropagation()" aria-label="Baixar anexo local">
+                     <img src="imgs/icons/download.svg" class="attachment-icon" alt="">
+                  </a>
+               }
 
             </div>
             }
@@ -100,4 +100,35 @@
       }
    </div>
 
+   <dialog #recordDialog class="record-dialog" aria-labelledby="record-dialog-title">
+      <form (submit)="$event.preventDefault(); saveRecord()">
+         <div class="dialog-head">
+            <div><span class="dialog-kicker">HISTÓRICO DE SAÚDE</span><h2 id="record-dialog-title">Adicionar registro</h2></div>
+            <button type="button" class="dialog-close" (click)="recordDialog.close()" aria-label="Fechar">×</button>
+         </div>
+         <p class="dialog-note">O registro aparece aqui e na home durante esta sessão. Não é enviado a um servidor.</p>
+         <fieldset class="mode-options"><legend>O que deseja registrar?</legend>
+            <label><input type="radio" name="mode" value="result" [(ngModel)]="draft.mode" (ngModelChange)="draft.type = filters.exame"> Resultado ou atendimento</label>
+            <label><input type="radio" name="mode" value="appointment" [(ngModel)]="draft.mode" (ngModelChange)="draft.type = filters.consulta"> Agendamento futuro</label>
+         </fieldset>
+         <div class="record-fields">
+            <label>Tipo<select name="type" [(ngModel)]="draft.type" required>
+               <option [ngValue]="filters.consulta">Consulta</option><option [ngValue]="filters.exame">Exame</option>
+               <option [ngValue]="filters.cirurgia">Cirurgia</option><option [ngValue]="filters.prescricao">Prescrição</option>
+            </select></label>
+            <label>Nome do {{ draft.type === filters.exame ? 'exame' : 'registro' }}<input name="title" type="text" [(ngModel)]="draft.title" placeholder="Ex.: Hemograma completo" required maxlength="100"></label>
+            <label>Médico ou profissional responsável<input name="clinician" type="text" [(ngModel)]="draft.clinician" placeholder="Ex.: Dra. Camila Rocha" required maxlength="100"></label>
+            <label>Localização / unidade<input name="location" type="text" [(ngModel)]="draft.location" placeholder="Ex.: Clínica Vital, unidade Centro" required maxlength="120"></label>
+            <label>{{ draft.mode === 'appointment' ? 'Data agendada' : 'Data do resultado / atendimento' }}<input name="date" type="date" [(ngModel)]="draft.date" [min]="draft.mode === 'appointment' ? today : null" required></label>
+            @if (draft.mode === 'appointment') {
+               <label>Horário<input name="time" type="time" [(ngModel)]="draft.time" required></label>
+            } @else {
+               <label>Resultado (resumo)<textarea name="result" [(ngModel)]="draft.result" rows="3" placeholder="Descreva o resultado, se aplicável" maxlength="1000"></textarea></label>
+               <label>Anexo local (PDF ou imagem, opcional)<input type="file" accept=".pdf,image/*" (change)="onFileSelected($event)"></label>
+            }
+            <label class="full-width">Observações<textarea name="observations" [(ngModel)]="draft.observations" rows="3" placeholder="Orientações ou informações pertinentes" maxlength="1000"></textarea></label>
+         </div>
+         <div class="dialog-actions"><button type="button" class="cancel-button" (click)="recordDialog.close()">Cancelar</button><button type="submit" class="save-button">Adicionar registro</button></div>
+      </form>
+   </dialog>
 </main>

@@ -8,12 +8,14 @@ import { Profile } from './pages/profile/profile';
 import { Share } from './pages/share/share';
 import { History } from './pages/history/history';
 import { RecordLayout } from './layouts/record-layout/record-layout';
+import { DemoAccessPage } from './pages/demo-access/demo-access';
 
 export const routes: Routes = [
 
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'register', component: Register, canActivate: [guestGuard] },
     { path: 'login', component: Login, canActivate: [guestGuard] },
+    { path: 'acesso-demo', component: DemoAccessPage },
 
     {
         path: '',

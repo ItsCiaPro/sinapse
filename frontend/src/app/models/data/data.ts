@@ -2,11 +2,34 @@ import { Injectable } from '@angular/core';
 import { filtros } from '../../models/enums/filters';
 import { documentStatus, documentType } from '../enums/document-enums';
 
+export type HealthRecord = {
+    type: filtros;
+    title: string;
+    description: string;
+    date: string;
+    isOpen: boolean;
+    future?: boolean;
+    detail: { name: string; content: string }[];
+    attatchments: { title: string; type: string; url?: string }[];
+};
+
+export type RecordDraft = {
+    mode: 'result' | 'appointment';
+    type: filtros;
+    title: string;
+    clinician: string;
+    location: string;
+    date: string;
+    time: string;
+    result: string;
+    observations: string;
+};
+
 @Injectable({
     providedIn: 'root'
 })
 export class Data {
-    private readonly history = [
+    private readonly history: HealthRecord[] = [
 
         {
             type: filtros.consulta,
@@ -171,6 +194,27 @@ export class Data {
 
     get getHistory() {
         return this.history;
+    }
+
+    addRecord(draft: RecordDraft, file?: File): void {
+        const day = new Date(`${draft.date}T12:00:00`).toLocaleDateString('pt-BR');
+        const detail = [
+            { name: draft.mode === 'appointment' ? 'Data agendada' : 'Data do resultado', content: `${day}${draft.time ? ` às ${draft.time}` : ''}` },
+            { name: 'Profissional', content: draft.clinician.trim() },
+            { name: 'Local', content: draft.location.trim() },
+            ...(draft.mode === 'result' && draft.result.trim() ? [{ name: 'Resultado', content: draft.result.trim() }] : []),
+            ...(draft.observations.trim() ? [{ name: 'Observações', content: draft.observations.trim() }] : []),
+        ];
+        this.history.unshift({
+            type: draft.type,
+            title: draft.title.trim(),
+            description: `${draft.mode === 'appointment' ? 'Agendado · ' : ''}${draft.clinician.trim()} · ${draft.location.trim()}`,
+            date: `${day}${draft.mode === 'appointment' && draft.time ? ` · ${draft.time}` : ''}`,
+            future: draft.mode === 'appointment',
+            isOpen: false,
+            detail,
+            attatchments: file ? [{ title: file.name, type: file.type, url: URL.createObjectURL(file) }] : [],
+        });
     }
 
     get getDocuments() {

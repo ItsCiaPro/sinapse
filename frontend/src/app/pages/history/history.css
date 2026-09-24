@@ -89,6 +89,11 @@ main {
 .filter-container.add-btn {
    background-color: var(--highlight-purple);
    height: fit-content;
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   border: 0;
+   color: white;
 }
 
 .filter-container.add-btn img {
@@ -227,4 +232,32 @@ main {
    .overview-card h1 {
       width: 2rem;
    }
+}
+
+.record-dialog { width: min(92vw, 680px); max-height: 88vh; margin: auto; padding: 26px; border: 1px solid #ded1e9; border-radius: 20px; background: white; color: #302a37; overflow-y: auto; box-shadow: 0 20px 70px #21132d33; }
+.record-dialog::backdrop { background: #231a2c99; }
+.dialog-head { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+.dialog-kicker { color: var(--highlight-purple); font-size: 1.1rem; font-weight: 700; letter-spacing: .13em; }
+.dialog-head h2 { margin: 6px 0; font-size: 2.2rem; font-weight: 700; }
+.dialog-close { border: 0; background: transparent; color: var(--bg-grey); font-size: 2.8rem; cursor: pointer; }
+.dialog-note { margin: 8px 0 20px; color: var(--bg-grey); font-size: 1.3rem; line-height: 1.4; }
+.mode-options { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-bottom: 18px; border: 0; }
+.mode-options legend { margin-bottom: 9px; font-size: 1.4rem; font-weight: 700; }
+.mode-options label { display: flex; align-items: center; gap: 6px; font-size: 1.3rem; cursor: pointer; }
+.mode-options input { accent-color: var(--highlight-purple); }
+.record-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+.record-fields label { display: grid; align-content: start; gap: 7px; font-size: 1.3rem; font-weight: 600; }
+.record-fields .full-width { grid-column: 1 / -1; }
+.record-fields input, .record-fields select, .record-fields textarea { width: 100%; min-width: 0; border: 1px solid #d4cadc; border-radius: 9px; padding: 10px; background: white; color: #302a37; font: inherit; font-size: 1.4rem; }
+.record-fields textarea { resize: vertical; }
+.dialog-actions { display: flex; justify-content: end; gap: 10px; margin-top: 24px; }
+.dialog-actions button { padding: 11px 15px; border-radius: 10px; font-size: 1.3rem; font-weight: 700; cursor: pointer; }
+.cancel-button { border: 1px solid #d4cadc; background: white; color: #66449b; }
+.save-button { border: 1px solid var(--highlight-purple); background: var(--highlight-purple); color: white; }
+.record-dialog button:focus-visible, .record-fields input:focus-visible, .record-fields select:focus-visible, .record-fields textarea:focus-visible { outline: 3px solid var(--counterhighlight-orange); outline-offset: 2px; }
+@media (max-width: 650px) {
+   .record-dialog { padding: 19px; }
+   .record-fields { grid-template-columns: 1fr; }
+   .dialog-actions { flex-wrap: wrap; }
+   .dialog-actions button { flex: 1 1 130px; }
 }
