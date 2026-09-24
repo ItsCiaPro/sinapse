@@ -1,5 +1,17 @@
 # ProjetoFinal
 
+## Instalação
+
+Neste diretório, execute `npm ci` antes de `npm start` ou `npm run build`. Isso instala também `qrcode` e suas definições TypeScript, usadas em `home.ts` e `share.ts`.
+
+```bash
+cd frontend
+npm ci
+npm start
+```
+
+Se o editor ainda indicar `Cannot find module 'qrcode'` depois da instalação, reinicie o servidor de desenvolvimento e o serviço TypeScript do editor.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.34.
 
 ## Development server
