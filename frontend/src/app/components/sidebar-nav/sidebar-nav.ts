@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { inject } from '@angular/core';
 import { Auth } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-sidebar-nav',
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './sidebar-nav.html',
   styleUrl: './sidebar-nav.css',
 })
 export class SidebarNav {
-  private authService = inject(Auth)
+  private authService = inject(Auth);
   toastMessage = '';
   loading = false;
 

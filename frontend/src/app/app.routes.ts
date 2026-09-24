@@ -20,10 +20,10 @@ export const routes: Routes = [
         component: RecordLayout,
         canActivate: [authGuard],
         children: [
-            { path: 'home', component: Home},
-            { path: 'history', component: History},
-            { path: 'profile', component: Profile},
-            { path: 'share', component: Share},
+            { path: 'home', component: Home, data: { title: 'Início' }},
+            { path: 'history', component: History, data: { title: 'Histórico' }},
+            { path: 'profile', component: Profile, data: { title: 'Perfil' }},
+            { path: 'share', component: Share, data: { title: 'Compartilhar' }},
         ]
     },
     
