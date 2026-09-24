@@ -17,16 +17,31 @@ main {
    margin: 12px 0;
 }
 
-.filters-wrapper {
+.home-top {
    display: flex;
    flex-direction: row;
+   width: 100%;
+   justify-content: space-between;
+   align-items: center;
+   flex-wrap: wrap;
+   margin-bottom: 12px;
    gap: 8px;
+   overflow-y: visible;
+}
+
+.filters-wrapper {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: row;
+   padding: 8px 0;
+   gap: 8px;
+   overflow-x: auto;
+   overflow-y: visible;
 }
 
 .filter-container {
    width: fit-content;
    padding: 1rem 1.5rem;
-   margin-bottom: 24px;
    border-radius: 20px;
    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.233);
 
@@ -34,6 +49,20 @@ main {
    background-color: white;
    color: var(--bg-grey);
    font-size: 1.3rem;
+}
+
+.filter-container.add-btn {
+   background-color: var(--highlight-purple);
+   height: fit-content;
+}
+
+.filter-container.add-btn img{
+   filter: brightness(0) saturate(100%) invert(98%) sepia(2%) saturate(0%) hue-rotate(345deg) brightness(104%) contrast(101%);
+}
+
+.filter-container.active {
+   color: white;
+   background-color: black;
 }
 
 
@@ -124,7 +153,7 @@ main {
    flex-direction: row;
    justify-content: space-between;
    align-items: center;
-   padding: 1.5rem;
+   padding: 1rem;
    border-radius: 20px;
    margin-top: 12px;
 
@@ -152,6 +181,11 @@ main {
 .attachment-download-btn {
    padding: 8px;
    border-radius: 5px;
-   background-color: white;
-   border: 1px solid var(--border-grey);
+   background-color: rgb(255, 255, 255);
+}
+
+@media (max-width: 650px) {
+   main {
+      padding: 12px;
+   }
 }

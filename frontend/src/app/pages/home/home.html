@@ -1,35 +1,43 @@
-<!-- @if (currentUser$ | async; as user) {
-   <p>Olá, {{ user.email }}</p>
-} -->
 
 <main>
 
    <h2 class="home-title">Histórico de saúde</h2>
 
-   <span class="filters-wrapper">
-      <div class="filter-container">
-         Todos
-      </div>
+   <div class="home-top">
 
-      <div class="filter-container">
-         Consultas
-      </div>
 
-      <div class="filter-container">
-         Exames
-      </div>
+      <span class="filters-wrapper">
+         <div class="filter-container" [class.active]="currentFilter==='Tudo'" (click)="currentFilter='Tudo'">
+            Todos
+         </div>
 
-      <div class="filter-container">
-         Cirurgias
-      </div>
+         <div class="filter-container" [class.active]="currentFilter==='Consulta'" (click)="currentFilter='Consulta'">
+            Consultas
+         </div>
 
-      <div class="filter-container">
-         Precrições
+         <div class="filter-container" [class.active]="currentFilter==='Exame'" (click)="currentFilter='Exame'">
+            Exames
+         </div>
+
+         <div class="filter-container" [class.active]="currentFilter==='Cirurgia'" (click)="currentFilter='Cirurgia'">
+            Cirurgias
+         </div>
+
+         <div class="filter-container" [class.active]="currentFilter==='Prescrição'"
+            (click)="currentFilter='Prescrição'">
+            Precrições
+         </div>
+      </span>
+
+      <div class="filter-container add-btn">
+         <img src="imgs/icons/add.svg" width="10px" alt="">
       </div>
-   </span>
+   </div>
 
    <div class="records">
       @for (record of history; track record.title) {
+      @if (currentFilter === 'Tudo' || currentFilter === record.type) {
+
       <div class="record-container" (click)="record.isOpen = !record.isOpen" [class.open]="record.isOpen">
          <div class="record-top">
             <span class="record-type">{{ record.type }}</span>
@@ -67,6 +75,7 @@
 
 
       </div>
+      }
       }
    </div>
 

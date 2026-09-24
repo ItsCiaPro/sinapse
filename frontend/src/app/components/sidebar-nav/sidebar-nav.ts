@@ -14,6 +14,8 @@ export class SidebarNav {
   toastMessage = '';
   loading = false;
 
+  isOpen = false;
+
   async logOut() {
     try {
       this.loading = true;

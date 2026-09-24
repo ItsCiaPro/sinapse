@@ -1,14 +1,23 @@
-<!-- @if (currentUser$ | async; as user) {
-   <p>Olá, {{ user.email }}</p>
-} -->
 
-<aside class="sidebar">
+<aside class="hidden-sidebar" [class.open]="!isOpen">
+   <div class="sidebar-menu-btn" (click)="isOpen = !isOpen">
+      <img src="imgs/icons/menu.svg" width="100%" alt="">
+   </div>
+</aside>
 
-   <div class="logo">
-      <img src="imgs/logo_filled.svg" width="50px" alt="">
-      <div>
-         <h1>Sinapse</h1>
-         <p>Prontuário Digital</p>
+<aside class="sidebar" [class.open]="isOpen">
+
+   <div class="sidebar-top">
+      <div class="logo">
+         <img src="imgs/logo_filled.svg" width="50px" alt="">
+         <div>
+            <h1>Sinapse</h1>
+            <p>Prontuário Digital</p>
+         </div>
+      </div>
+
+      <div class="sidebar-menu-btn" (click)="isOpen = !isOpen">
+         <img src="imgs/icons/menu.svg" width="100%" alt="">
       </div>
    </div>
 
@@ -41,13 +50,13 @@
                   <span>Perfil</span>
                </a>
             </li>
-            
+
          </ul>
       </div>
 
       <div class="nav-group bottom">
          <ul class="bottom-nav">
-            <li >
+            <li>
                <button (click)="logOut()">
                   <img src="imgs/icons/logout.svg" class="nav-icon" alt="">
                   <span>Sair</span>
@@ -58,3 +67,5 @@
 
    </nav>
 </aside>
+
+<div class="fade" [class.open]="isOpen"></div>

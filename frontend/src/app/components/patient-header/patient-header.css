@@ -57,6 +57,11 @@
    align-items: center;
 }
 
+.patient-avatar {
+   width: 60px;
+   height: 60px;
+}
+
 .patient-identity img {
    border: 1px solid #706C61;
    border-radius: 100%;
@@ -106,17 +111,11 @@
    border-radius: 100%;
 }
 
-.tag--pink {
+.tag--pink {}
 
-}
+.tag--yellow {}
 
-.tag--yellow {
-
-}
-
-.tag--blue {
-
-}
+.tag--blue {}
 
 @media (max-width: 1000px) {
 
@@ -133,4 +132,32 @@
       display: flex;
    }
 
+}
+
+@media (max-width: 500px) {
+   .patient-header {
+      padding: 1rem 2rem;
+   }
+
+   .more-btn {
+      padding: 4px;
+   }
+
+   .patient-avatar {
+      width: 40px;
+      height: 40px;
+   }
+
+   .patient-name {
+      font-size: 1.5rem;
+   }
+
+   .patient-sub {
+      font-size: 1.25rem;
+   }
+
+   .patient-tags .tag {
+      font-size: 1rem;
+      padding: 6px;
+   }
 }
