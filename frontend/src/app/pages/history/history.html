@@ -61,7 +61,7 @@
 
       <div class="record-container" (click)="record.isOpen = !record.isOpen" [class.open]="record.isOpen">
          <div class="record-top">
-            <span class="record-type">{{ record.type }}</span>
+            <span class="record-type" [attr.data-type]="record.type">{{ record.type }}</span>
             <span class="record-date">{{ record.date }}</span>
          </div>
 
