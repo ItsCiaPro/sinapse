@@ -17,7 +17,7 @@
                <p class="patient-sub">42 anos · CPF 123.456.789-01</p>
             </div>
 
-            <button class="more-btn more-btn-mobile" aria-label="Mais opções">
+            <button class="more-btn more-btn-mobile" (click)="router.navigate(['/profile'])" aria-label="Mais opções">
                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                   aria-hidden="true">
@@ -32,7 +32,7 @@
             <span class="tag tag--rose"><span class="tag-dot"></span>O+</span>
             <span class="tag tag--amber"><span class="tag-dot"></span>Alergia: Penicilina</span>
             <span class="tag tag--indigo"><span class="tag-dot"></span>Hipertensão</span>
-            <button class="more-btn more-btn-desktop" aria-label="Mais opções">
+            <button class="more-btn more-btn-desktop" (click)="router.navigate(['/profile'])" aria-label="Mais opções">
                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                   aria-hidden="true">

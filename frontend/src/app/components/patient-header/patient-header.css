@@ -21,9 +21,9 @@
    display: flex;
 
    border-radius: 100%;
-   border: 1px solid #706C61;
-   background-color: white;
-   padding: 8px;
+   border: 1px solid var(--border-grey);
+   background-color: #00000013;
+   padding: 6px;
 
    justify-content: center;
    align-items: center;
@@ -89,7 +89,9 @@
 
    text-wrap: nowrap;
    font-size: 1.2rem;
-   background-color: #706C61;
+   background-color: var(--highlight-purple);
+   color: white;
+   font-weight: bold;
    border-radius: 15px;
    padding: 8px;
 }
@@ -100,7 +102,7 @@
    height: 8px;
    margin-right: 5px;
 
-   background-color: black;
+   background-color: white;
    border-radius: 100%;
 }
 

@@ -39,14 +39,20 @@
 .sidebar-nav {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 2rem;
   padding: 0 1rem;
+  height: 100%;
 }
 
 .nav-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.nav-group.bottom {
+  margin-top: auto;
 }
 
 /* Títulos das Seções (PACIENTE, PROFISSIONAIS) */
@@ -76,6 +82,21 @@
   gap: 0.85rem;
   padding: 0.75rem 1rem;
   text-decoration: none;
+  color: #4a4a4a;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-radius: 9999px; /* Formato arredondado pill */
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar-nav button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.85rem;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  border: none;
   color: #4a4a4a;
   font-size: 1.5rem;
   font-weight: 500;
