@@ -35,7 +35,7 @@ export class History {
 
   saveRecord(): void {
     if (!this.draft.title.trim() || !this.draft.clinician.trim() || !this.draft.location.trim() || !this.draft.date ||
-        (this.draft.mode === 'appointment' && !this.draft.time)) return;
+        (this.draft.mode === 'appointment' && (!this.draft.time || this.draft.type === filtros.prescricao))) return;
     this.data.addRecord(this.draft, this.attachment);
     this.currentFilter = filtros.tudo;
     this.recordDialog?.nativeElement.close();

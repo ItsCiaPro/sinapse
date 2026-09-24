@@ -114,7 +114,8 @@
          <div class="record-fields">
             <label>Tipo<select name="type" [(ngModel)]="draft.type" required>
                <option [ngValue]="filters.consulta">Consulta</option><option [ngValue]="filters.exame">Exame</option>
-               <option [ngValue]="filters.cirurgia">Cirurgia</option><option [ngValue]="filters.prescricao">Prescrição</option>
+               <option [ngValue]="filters.cirurgia">Cirurgia</option>
+               @if (draft.mode === 'result') { <option [ngValue]="filters.prescricao">Prescrição</option> }
             </select></label>
             <label>Nome do {{ draft.type === filters.exame ? 'exame' : 'registro' }}<input name="title" type="text" [(ngModel)]="draft.title" placeholder="Ex.: Hemograma completo" required maxlength="100"></label>
             <label>Médico ou profissional responsável<input name="clinician" type="text" [(ngModel)]="draft.clinician" placeholder="Ex.: Dra. Camila Rocha" required maxlength="100"></label>

@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-patient-header',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './patient-header.html',
   styleUrl: './patient-header.css',
 })

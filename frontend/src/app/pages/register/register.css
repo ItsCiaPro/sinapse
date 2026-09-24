@@ -131,10 +131,31 @@ form {
   text-decoration: underline;
 }
 
-.lgpd_container {
-  margin-top: 24px;
-  text-align: center;
+.terms-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 8px 0 12px;
 }
+
+.terms-group input {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--highlight-purple);
+  cursor: pointer;
+}
+
+.terms-group label {
+  color: #4c4655;
+  font-size: 13px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.terms-group a { color: #6944a7; font-weight: 700; text-decoration: underline; }
+.terms-group input:focus-visible, .terms-group a:focus-visible { outline: 3px solid var(--counterhighlight-orange); outline-offset: 3px; }
 
 @media (max-width: 650px) {
   .container {

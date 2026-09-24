@@ -16,10 +16,16 @@ export class Register {
   email = '';
   password = '';
   passwordConfirm = '';
+  acceptedTerms = false;
   toastMessage = '';
   loading = false;
 
   async onSubmit() {
+
+    if (!this.acceptedTerms) {
+      this.toastMessage = 'Leia e aceite as condições de uso das informações para continuar.';
+      return;
+    }
 
     if (this.passwordConfirm !== this.password) {
       this.toastMessage = 'As senhas não coincidem.';

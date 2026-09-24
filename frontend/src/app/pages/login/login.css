@@ -131,11 +131,6 @@ form {
   text-decoration: underline;
 }
 
-.lgpd_container {
-  margin-top: 24px;
-  text-align: center;
-}
-
 @media (max-width: 650px) {
   .container {
     width: 100%;

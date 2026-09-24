@@ -25,7 +25,12 @@
                required>
          </div>
 
-         <button type="submit" [disabled]="loading || !registerForm.valid" class="btn">Cadastrar</button>
+         <div class="terms-group">
+            <input id="acceptTerms" type="checkbox" name="acceptTerms" [(ngModel)]="acceptedTerms" required>
+            <label for="acceptTerms">Ao criar uma conta, concordo com o uso das minhas informações para criar e acessar minha conta e declaro ter lido a <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener noreferrer">Lei Geral de Proteção de Dados (LGPD)</a>.</label>
+         </div>
+
+         <button type="submit" [disabled]="loading || !registerForm.valid || !acceptedTerms" class="btn">Cadastrar</button>
 
          <p class="login-link">
             Já tem uma conta? <a routerLink="/login">Faça login</a>
