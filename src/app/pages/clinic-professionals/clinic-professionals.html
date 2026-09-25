@@ -1,0 +1,14 @@
+<section class="page-heading"><span class="kicker">EQUIPE</span><h2>Profissionais</h2><p>Cadastre quem atende na clínica para relacionar os registros à sua equipe.</p></section>
+<div class="notice">Os dados desta área ficam somente nesta sessão e não são gravados no banco de dados. Não insira dados reais de profissionais.</div>
+<section class="panel"><div class="panel-heading"><div><span class="kicker">SUA EQUIPE</span><h3>Profissionais cadastrados <span class="count">{{ demo.professionals().length }}</span></h3></div><button class="primary-button" type="button" (click)="formOpen = !formOpen">{{ formOpen ? 'Fechar formulário' : '+ Novo profissional' }}</button></div>
+  @if (formOpen) {
+    <form class="entry-form" #professionalForm="ngForm" (ngSubmit)="save()"><h4>Adicionar profissional</h4><div class="form-grid">
+      <label>Nome completo <input name="name" [(ngModel)]="draft.name" required maxlength="100" placeholder="Ex.: Dra. Ana Silva"></label>
+      <label>Especialidade ou função <input name="specialty" [(ngModel)]="draft.specialty" required maxlength="80" placeholder="Ex.: Cardiologia"></label>
+      <label>Conselho e registro <input name="council" [(ngModel)]="draft.council" required maxlength="50" placeholder="Ex.: CRM 12345/SP"></label>
+      <label>Contato (opcional) <input name="contact" [(ngModel)]="draft.contact" maxlength="100" placeholder="E-mail ou telefone"></label>
+    </div><div class="form-actions"><button class="secondary-button" type="button" (click)="formOpen = false">Cancelar</button><button class="primary-button" type="submit" [disabled]="professionalForm.invalid">Cadastrar profissional</button></div></form>
+  }
+  @if (demo.professionals().length) { <div class="card-list">@for (person of demo.professionals(); track person.id) { <article class="item-card"><span class="avatar">{{ person.name.charAt(0).toUpperCase() }}</span><div><h4>{{ person.name }}</h4><p>{{ person.specialty }} · {{ person.council }}</p>@if (person.contact) { <small>{{ person.contact }}</small> }</div><span class="status">Ativo</span></article> }</div> }
+  @else { <div class="empty"><strong>Nenhum profissional cadastrado</strong><p>Comece pela equipe para poder vincular um profissional a cada atendimento.</p></div> }
+</section>

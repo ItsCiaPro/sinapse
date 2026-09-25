@@ -1,0 +1,5 @@
+:host { display: block; }
+.clinic-profile { width: min(100%, 1080px); margin: 0 auto; }
+.profile-intro { margin: 0 0 28px; }.profile-intro h1 { font-size: 3rem; font-weight: 700; margin: 9px 0; }.profile-intro p { color: var(--bg-grey); font-size: 1.4rem; line-height: 1.5; }
+.clinic-edit { padding: 24px; margin-bottom: 28px; }.clinic-edit fieldset { border: 0; border-top: 1px solid #e8e1ef; padding: 15px 0 3px; margin-top: 15px; }.clinic-edit legend { color: #644593; font-size: 1.5rem; font-weight: 700; padding-right: 10px; }.clinic-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }.clinic-edit .section-heading { margin-bottom: 10px; }.clinic-edit .dialog-note { margin-bottom: 10px; }.storage-note { margin: 24px 0; font-size: 1.2rem; line-height: 1.45; color: var(--bg-grey); }.form-error { font-size: 1.3rem; color: #a24129; margin-top: 12px; }
+@media (max-width: 650px) { .clinic-fields { grid-template-columns: 1fr; }.clinic-edit { padding: 17px; }.profile-intro h1 { font-size: 2.4rem; } }

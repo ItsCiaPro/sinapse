@@ -1,0 +1,90 @@
+<main class="share-page">
+  <div class="share-content">
+    <header class="share-intro">
+      <div>
+        <h1>Compartilhamento</h1>
+        <p>Crie um QR Code para abrir uma página pública com os tópicos selecionados.</p>
+      </div>
+    </header>
+
+    <div class="share-grid">
+      <section class="share-card" aria-labelledby="share-card-title">
+        <div class="card-heading">
+          <div>
+            <span class="eyebrow">NOVO ACESSO</span>
+            <h2 id="share-card-title">Compartilhar via QR Code</h2>
+            <p>Configure a página que será aberta ao escanear.</p>
+          </div>
+        </div>
+
+        <div class="share-settings">
+          <div class="qr-preview">
+            @if (activeAccess && qrImage) {
+              <img class="generated-qr" [src]="qrImage" alt="QR Code para a página pública de acesso">
+              <strong>Código ativo até {{ activeAccess.expiresAt | date:'dd/MM/yyyy HH:mm' }}</strong>
+              <button type="button" class="copy-link" (click)="copyLink()">{{ copied ? 'Link copiado' : 'Copiar link' }}</button>
+              @if (copyError) { <span>Não foi possível copiar. Abra o link no navegador para compartilhá-lo.</span> }
+            } @else {
+              <span class="qr-icon" aria-hidden="true"><img src="imgs/icons/qrcode.svg" alt=""></span>
+              <strong>Seu código aparecerá aqui</strong>
+              <span>Selecione os tópicos e gere o código.</span>
+            }
+          </div>
+
+          <div class="access-options">
+            <div class="setting-heading">
+              <h3>Permissões de acesso</h3>
+              <p>Escolha os tópicos que serão compartilhados</p>
+            </div>
+            <label class="option-row" for="share-history">
+              <span class="option-copy"><strong>Histórico de saúde</strong><small>Consultas e cirurgias registradas</small></span>
+              <span class="switch"><input id="share-history" type="checkbox" [(ngModel)]="historyEnabled"><span class="switch-track"></span></span>
+            </label>
+            <label class="option-row" for="share-exams">
+              <span class="option-copy"><strong>Exames</strong><small>Resultados e arquivos anexados</small></span>
+              <span class="switch"><input id="share-exams" type="checkbox" [(ngModel)]="examsEnabled"><span class="switch-track"></span></span>
+            </label>
+            <label class="option-row" for="share-prescriptions">
+              <span class="option-copy"><strong>Prescrições</strong><small>Receitas e medicamentos</small></span>
+              <span class="switch"><input id="share-prescriptions" type="checkbox" [(ngModel)]="prescriptionsEnabled"><span class="switch-track"></span></span>
+            </label>
+            <div class="validity-row">
+              <label for="share-validity"><strong>Prazo do código</strong><small>Depois disso, a página indica prazo encerrado.</small></label>
+              <select id="share-validity" name="validity" [(ngModel)]="durationHours">
+                <option [ngValue]="1">1 hora</option>
+                <option [ngValue]="24">24 horas</option>
+                <option [ngValue]="168">7 dias</option>
+                <option [ngValue]="720">30 dias</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="button" class="generate-button" [disabled]="!historyEnabled && !examsEnabled && !prescriptionsEnabled" (click)="generate()">{{ activeAccess ? 'Gerar novo QR Code' : 'Gerar QR Code' }}</button>
+        </div>
+      </section>
+
+      <aside class="share-aside" aria-labelledby="recent-title">
+        <section class="recent-section">
+          <div class="aside-heading">
+            <span class="eyebrow">ACOMPANHAMENTO</span>
+            <h2 id="recent-title">Acessos recentes</h2>
+          </div>
+          <div class="empty-access">
+            <span class="empty-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12s3.5-5.5 9.5-5.5 9.5 5.5 9.5 5.5-3.5 5.5-9.5 5.5S2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+            </span>
+            <h3>Sem registro de leituras</h3>
+            <p>O site não registra quem escaneia o código.</p>
+          </div>
+        </section>
+        <section class="privacy-section" aria-labelledby="privacy-title">
+          <h2 id="privacy-title">Você decide o que compartilhar</h2>
+          <div class="privacy-item"><span class="privacy-symbol" aria-hidden="true">◷</span><div><strong>Prazo definido</strong><p>O link informa quando o período terminou.</p></div></div>
+          <div class="privacy-item"><span class="privacy-symbol" aria-hidden="true">✓</span><div><strong>Sem acesso ao prontuário</strong><p>O código não disponibiliza registros do seu histórico.</p></div></div>
+          <div class="privacy-item"><span class="privacy-symbol" aria-hidden="true">◉</span><div><strong>Tópicos selecionados</strong><p>A página pública lista apenas os tópicos escolhidos.</p></div></div>
+        </section>
+      </aside>
+    </div>
+  </div>
+</main>

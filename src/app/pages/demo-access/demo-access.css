@@ -1,0 +1,10 @@
+:host { display: block; min-height: 100vh; }
+.demo-page { display: grid; place-items: center; min-height: 100vh; padding: 20px; background: var(--secondary-color); }
+.demo-card { width: min(100%, 560px); padding: clamp(24px, 5vw, 42px); background: white; border: 1px solid #e8deee; border-radius: 22px; box-shadow: 0 12px 38px #49305412; }
+.eyebrow { color: var(--highlight-purple); font-size: 1.2rem; font-weight: 700; letter-spacing: .15em; }
+h1 { margin: 14px 0; font-size: 2.8rem; font-weight: 700; }
+h2 { margin: 24px 0 10px; font-size: 1.7rem; font-weight: 700; }
+p, .sample { font-size: 1.4rem; line-height: 1.5; color: #494450; }
+.expiry { margin-top: 12px; color: #6b439e; }
+.sample { display: grid; gap: 4px; padding: 14px 0; border-top: 1px solid #eee8f1; }
+.sample strong { color: #28232f; }

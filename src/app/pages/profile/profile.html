@@ -1,0 +1,72 @@
+<main class="profile-page">
+   <div class="profile-container">
+      <div class="profile-column">
+         @for (section of sections; track section.sectionTitle; let sectionIndex = $index) {
+         <section class="profile-group" [attr.aria-labelledby]="'section-' + sectionIndex">
+            <div class="section-heading">
+               <h2 [id]="'section-' + sectionIndex">{{ section.sectionTitle }}</h2>
+               <button type="button" class="text-action" (click)="openEdit(sectionIndex)" [attr.aria-label]="'Editar ' + section.sectionTitle">Editar <span aria-hidden="true">✎</span></button>
+            </div>
+            <div class="profile-card">
+               @for (row of section.sectionRows; track row.sectionTitle) {
+               <div class="profile-row">
+                  <span class="row-label">{{ row.sectionTitle }}</span>
+                  <strong class="row-value" [class.empty-value]="!row.sectionData">{{ row.sectionData || 'Não informado' }}</strong>
+               </div>
+               }
+            </div>
+         </section>
+         }
+      </div>
+
+      <div class="profile-column alerts-column">
+         <section class="profile-group" aria-labelledby="alerts-title">
+            <div class="section-heading">
+               <h2 id="alerts-title">Alertas clínicos</h2>
+               <button type="button" class="text-action" (click)="openAlert()">+ Novo alerta</button>
+            </div>
+            <p class="section-description">Informações importantes para seus atendimentos.</p>
+            <div class="alert-list">
+               @for (alert of clinicalAlerts; track alert) {
+               <article class="alert-card" [class.alert-allergy]="alert.type === 'allergy'" [class.alert-condition]="alert.type === 'condition'" [class.alert-other]="alert.type === 'other'">
+                  <span class="alert-mark" aria-hidden="true">{{ alert.type === 'allergy' ? '!' : alert.type === 'condition' ? '♥' : 'i' }}</span>
+                  <div><h3>{{ alert.title }}</h3><p>{{ alert.description || 'Sem descrição adicional.' }}</p></div>
+               </article>
+               }
+            </div>
+         </section>
+
+         <a class="share-card" routerLink="/share">
+            <span class="share-icon" aria-hidden="true">↗</span>
+            <span><strong>Compartilhar histórico</strong><small>Configure o acesso para um profissional de saúde.</small></span>
+            <span class="share-arrow" aria-hidden="true">→</span>
+         </a>
+      </div>
+   </div>
+
+   <dialog #editDialog class="profile-dialog" aria-labelledby="edit-dialog-title">
+      <form (submit)="$event.preventDefault(); saveEdit()">
+         <div class="dialog-heading"><div><span class="dialog-kicker">DADOS DO PACIENTE</span><h2 id="edit-dialog-title">Editar {{ sections[editingSectionIndex].sectionTitle }}</h2></div><button type="button" class="close-button" (click)="editDialog.close()" aria-label="Fechar">×</button></div>
+         <p class="dialog-note">As alterações ficam apenas nesta tela e não são salvas em um banco de dados.</p>
+         <div class="dialog-fields">
+            @for (row of editingRows; track row.sectionTitle) {
+            <label>{{ row.sectionTitle }}<input type="text" [name]="'field-' + $index" [(ngModel)]="row.sectionData" autocomplete="off"></label>
+            }
+         </div>
+         <div class="dialog-actions"><button type="button" class="secondary-button" (click)="editDialog.close()">Cancelar</button><button type="submit" class="primary-button">Aplicar na tela</button></div>
+      </form>
+   </dialog>
+
+   <dialog #alertDialog class="profile-dialog" aria-labelledby="alert-dialog-title">
+      <form (submit)="$event.preventDefault(); saveAlert()">
+         <div class="dialog-heading"><div><span class="dialog-kicker">ALERTAS CLÍNICOS</span><h2 id="alert-dialog-title">Adicionar alerta</h2></div><button type="button" class="close-button" (click)="alertDialog.close()" aria-label="Fechar">×</button></div>
+         <p class="dialog-note">O novo alerta aparecerá nesta tela, sem salvar em um banco de dados.</p>
+         <div class="dialog-fields">
+            <label>Tipo de alerta<select name="alert-type" [(ngModel)]="newAlert.type"><option value="allergy">Alergia</option><option value="condition">Condição de saúde</option><option value="other">Outro</option></select></label>
+            <label>Título<input type="text" name="alert-title" [(ngModel)]="newAlert.title" placeholder="Ex.: Alergia a látex" required maxlength="80"></label>
+            <label>Descrição<textarea name="alert-description" [(ngModel)]="newAlert.description" rows="3" placeholder="Informações importantes para o atendimento" maxlength="240"></textarea></label>
+         </div>
+         <div class="dialog-actions"><button type="button" class="secondary-button" (click)="alertDialog.close()">Cancelar</button><button type="submit" class="primary-button">Adicionar na tela</button></div>
+      </form>
+   </dialog>
+</main>

@@ -1,0 +1,176 @@
+<main>
+
+   <div class="dashboard-top">
+   <section class="dashboard-panel" aria-labelledby="cards-title">
+   <h2 class="home-title" id="cards-title">Carteirinhas</h2>
+   <div class="carousel-wrapper">
+      <button class="carousel-arrow" type="button" aria-label="Documento anterior"
+         [disabled]="currentDocumentIndex === 0" (click)="showDocument(currentDocumentIndex - 1)">
+         <span aria-hidden="true">&#8249;</span>
+      </button>
+
+      <div class="carousel" #documentCarousel aria-label="Carteirinhas cadastradas"
+         tabindex="0" (scroll)="syncDocumentIndex()" (keydown.arrowleft)="onCarouselArrow($event, -1)"
+         (keydown.arrowright)="onCarouselArrow($event, 1)">
+         @for (doc of documents; track $index; let i = $index) {
+         <div class="item" [style.background-color]="documentsColor[doc.documentType]"
+            [class.light-card]="doc.documentType === 'Cartão de Vacinação'"
+            [class.expanded]="isExpanded(i)">
+            <div class="item-content">
+            <div class="item-header" [attr.aria-hidden]="isExpanded(i)">
+               <div class="item-top">
+                  <h1>{{ doc.documentType }}</h1>
+                  <h1>{{ doc.status }}</h1>
+               </div>
+
+               <div class="item-middle">
+                  <h1>{{ doc.issuer.name }}</h1>
+
+                  @for (holderInfo of doc.holder | keyvalue; track holderInfo.key) {
+                  <h2>{{ holderInfo.value }}</h2>
+                  }
+               </div>
+            </div>
+
+               <div class="item-bottom" [id]="'document-details-' + i" role="region"
+                  [attr.aria-label]="'Detalhes de ' + doc.documentType"
+                  [attr.aria-hidden]="!isExpanded(i)"
+                  [attr.tabindex]="isExpanded(i) ? 0 : -1">
+                  <h2 class="details-heading">Dados da carteirinha</h2>
+                  <dl class="details-list">
+                  @for (cardInfo of doc.cardDetails | keyvalue: keepDetailOrder; track cardInfo.key) {
+                     <div class="detail-row">
+                        <dt>{{ detailLabel(cardInfo.key) }}</dt>
+                        <dd>{{ detailValue(cardInfo.key, cardInfo.value) }}</dd>
+                     </div>
+                  }
+                  </dl>
+               </div>
+            </div>
+            <button class="show-details-btn" type="button" (click)="toggleDetails(i)"
+               [attr.aria-expanded]="isExpanded(i)" [attr.aria-controls]="'document-details-' + i">
+               <img src="imgs/icons/down-arrow.svg" alt="" [class.rotated]="isExpanded(i)">
+               {{ isExpanded(i) ? 'Ocultar detalhes' : 'Mostrar detalhes' }}
+            </button>
+
+         </div>
+         }
+      </div>
+      <button class="carousel-arrow" type="button" aria-label="Próximo documento"
+         [disabled]="currentDocumentIndex >= documents.length - 1"
+         (click)="showDocument(currentDocumentIndex + 1)">
+         <span aria-hidden="true">&#8250;</span>
+      </button>
+   </div>
+
+   <p class="carousel-position" aria-live="polite">
+      {{ documents.length ? currentDocumentIndex + 1 : 0 }} de {{ documents.length }} documentos
+   </p>
+   </section>
+
+   <section class="dashboard-panel qr-panel" aria-labelledby="qr-title">
+      <h2 class="home-title" id="qr-title">QR Code de compartilhamento</h2>
+      @if (activeAccess && qrImage) {
+         <div class="active-code">
+            <img [src]="qrImage" alt="QR Code para a página pública de acesso">
+            <div>
+               <span class="code-badge">Código ativo</span>
+               <p>Compartilhe seu histórico com outro aparelho.</p>
+               <small>Prazo até {{ activeAccess.expiresAt | date:'dd/MM/yyyy HH:mm' }}</small>
+               <a [href]="activeAccess.url" target="_blank" rel="noopener noreferrer">Abrir página do QR ↗</a>
+               <button type="button" class="copy-active-link" (click)="copyActiveLink()">{{ copiedLink ? 'Link copiado' : 'Copiar link' }}</button>
+               @if (copyError) { <small>Não foi possível copiar neste navegador.</small> }
+            </div>
+         </div>
+      } @else {
+         <div class="empty-code">
+            <img src="imgs/icons/qrcode.svg" alt="">
+            <p>Nenhum QR Code ativo.</p>
+            <span>Gere um código na página Compartilhar para encontrá-lo aqui ao entrar.</span>
+         </div>
+      }
+      <a class="manage-code" routerLink="/share">{{ activeAccess ? 'Gerenciar QR Code' : 'Gerar QR Code' }}</a>
+   </section>
+   </div>
+
+   <h2 class="home-title">Histórico de saúde</h2>
+
+   <div class="home-top">
+
+
+      <span class="filters-wrapper">
+         <div class="filter-container" [class.active]="currentFilter==='Tudo'" (click)="currentFilter='Tudo'">
+            Todos
+         </div>
+
+         <div class="filter-container" [class.active]="currentFilter==='Consulta'" (click)="currentFilter='Consulta'">
+            Consultas
+         </div>
+
+         <div class="filter-container" [class.active]="currentFilter==='Exame'" (click)="currentFilter='Exame'">
+            Exames
+         </div>
+
+         <div class="filter-container" [class.active]="currentFilter==='Cirurgia'" (click)="currentFilter='Cirurgia'">
+            Cirurgias
+         </div>
+
+         <div class="filter-container" [class.active]="currentFilter==='Prescrição'"
+            (click)="currentFilter='Prescrição'">
+            Prescrições
+         </div>
+      </span>
+
+      <a class="filter-container add-btn" routerLink="/history" aria-label="Adicionar registro no histórico">
+         <img src="imgs/icons/add.svg" width="10px" alt=""> Adicionar registro
+      </a>
+   </div>
+
+   <div class="records">
+      @for (record of history; track record) {
+      @if (currentFilter === 'Tudo' || currentFilter === record.type) {
+
+      <div class="record-container" (click)="record.isOpen = !record.isOpen" [class.open]="record.isOpen">
+         <div class="record-top">
+            <span class="record-type" [attr.data-type]="record.type">{{ record.type }}{{ record.future ? ' · Agendado' : '' }}</span>
+            <span class="record-date">{{ record.date }}</span>
+         </div>
+
+         <h2 class="record-title">{{ record.title }}</h2>
+         <h3 class="record-description">{{ record.description }}</h3>
+
+         <div class="record-content">
+            @for (detail of record.detail; track detail.name) {
+            <span>
+               <h3 class="record-content-label">{{ detail.name }}:</h3>
+               <h3 class="record-content-data">{{ detail.content }}</h3>
+            </span>
+            }
+
+            @if (record.attatchments && record.attatchments.length > 0) {
+            @for (attatchment of record.attatchments; track attatchment.title) {
+            <div class="record-attatchment">
+               <span>
+                  <img src="imgs/icons/pdf.svg" class="attachment-icon" alt="pdf">
+                  <h3 class="attachment-title">{{ attatchment.title }}</h3>
+               </span>
+
+               @if (attatchment.url) {
+                  <a class="attachment-download-btn" [href]="attatchment.url" [attr.download]="attatchment.title" (click)="$event.stopPropagation()" aria-label="Baixar anexo local">
+                     <img src="imgs/icons/download.svg" class="attachment-icon" alt="">
+                  </a>
+               }
+
+            </div>
+            }
+
+            }
+         </div>
+
+
+      </div>
+      }
+      }
+   </div>
+
+</main>

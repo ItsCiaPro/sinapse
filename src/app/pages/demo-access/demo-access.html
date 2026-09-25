@@ -1,0 +1,18 @@
+<main class="demo-page">
+  <article class="demo-card">
+    <span class="eyebrow">SINAPSE · ACESSO POR QR CODE</span>
+    @if (valid) {
+      <h1>Página de acesso</h1>
+      <p>Este link exibe apenas os tópicos escolhidos na geração do código. Nenhum dado do prontuário é transmitido ou disponibilizado por este link.</p>
+      <p>A validade é verificada neste navegador; o código não concede autorização para acessar registros de saúde.</p>
+      <p class="expiry">Prazo indicado: {{ expiresAt | date:'dd/MM/yyyy HH:mm' }}</p>
+      <h2>Tópicos selecionados</h2>
+      @if (scopes.includes('historico')) { <div class="sample"><strong>Histórico</strong><span>Registros não disponibilizados neste link.</span></div> }
+      @if (scopes.includes('exames')) { <div class="sample"><strong>Exames</strong><span>Nenhum resultado ou arquivo compartilhado.</span></div> }
+      @if (scopes.includes('prescricoes')) { <div class="sample"><strong>Prescrições</strong><span>Nenhuma prescrição compartilhada.</span></div> }
+    } @else {
+      <h1>Prazo encerrado</h1>
+      <p>O período indicado neste QR Code terminou. Solicite um novo código.</p>
+    }
+  </article>
+</main>

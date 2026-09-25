@@ -1,0 +1,29 @@
+<section class="page-heading"><span class="kicker">PAINEL DA CLÍNICA</span><h2>Seu espaço de atendimento</h2><p>Organize pacientes, equipe, atendimentos e marcações em um só lugar.</p></section>
+<div class="notice">Os dados desta área ficam somente nesta sessão e não são gravados no banco de dados. Não insira informações reais de pacientes.</div>
+<div class="stats clinic-stats">
+  <a class="stat-card" routerLink="/clinica/pacientes"><span>PACIENTES</span><strong>{{ clinic.patients().length }}</strong><small>Buscar cadastros →</small></a>
+  <a class="stat-card" routerLink="/clinica/profissionais"><span>PROFISSIONAIS</span><strong>{{ clinic.professionals().length }}</strong><small>Gerenciar equipe →</small></a>
+  <a class="stat-card" routerLink="/clinica/atendimentos"><span>ATENDIMENTOS</span><strong>{{ clinic.attendances().length }}</strong><small>Ver registros →</small></a>
+  <a class="stat-card" routerLink="/clinica/agenda"><span>MARCAÇÕES</span><strong>{{ clinic.appointments().length }}</strong><small>Abrir calendário →</small></a>
+</div>
+<section class="panel agenda-widget" aria-labelledby="agenda-widget-title">
+  <div class="panel-heading"><div><span class="kicker">AGENDA DA SEMANA</span><h3 id="agenda-widget-title">Marcações por dia</h3></div><a class="text-link" routerLink="/clinica/agenda">Ver mais →</a></div>
+  <div class="widget-days" role="group" aria-label="Próximos sete dias">
+    @for (day of weekDays; track day.key) {
+      <button class="widget-day" type="button" [class.selected]="selectedDay === day.key" [attr.aria-pressed]="selectedDay === day.key" (click)="selectedDay = day.key">
+        <span>{{ day.weekday }}</span><strong>{{ day.day }}</strong><small>{{ day.count ? (day.count === 1 ? '1 marcação' : day.count + ' marcações') : '—' }}</small>
+      </button>
+    }
+  </div>
+  <div class="widget-events">
+    @for (item of selectedAppointments; track item.id) { <div class="widget-event"><time>{{ item.date.slice(11, 16) }}</time><span><strong>{{ clinic.patientName(item.patientId) }}</strong><small>{{ item.type }} · {{ item.location }}</small></span></div> }
+    @empty { <p>Nenhuma marcação neste dia.</p> }
+  </div>
+</section>
+<section class="panel timeline-panel"><div class="panel-heading"><div><span class="kicker">PRÓXIMOS DIAS</span><h3>Próximas marcações</h3></div><a class="text-link" routerLink="/clinica/agenda">Ver calendário →</a></div>
+  @for (item of clinic.upcoming().slice(0, 6); track item.id) { <article class="timeline-item"><time>{{ item.date.slice(8, 10) }}/{{ item.date.slice(5, 7) }}<small>{{ item.date.slice(11, 16) }}</small></time><div><strong>{{ clinic.patientName(item.patientId) }}</strong><p>{{ item.type }} · {{ item.location }} · {{ item.professionalId ? clinic.professionalName(item.professionalId) : 'A definir' }}</p></div></article> }
+  @empty { <div class="empty"><strong>Sem marcações próximas</strong><p>Os próximos horários agendados aparecerão aqui.</p></div> }
+</section>
+<section class="panel"><div class="panel-heading"><div><span class="kicker">ACESSO RÁPIDO</span><h3>Organize seus registros</h3></div></div>
+  <div class="quick-links"><a routerLink="/clinica/pacientes"><span class="step">01</span><strong>Cadastre um paciente</strong><small>Guarde os dados para selecionar nos registros.</small><b>Adicionar →</b></a><a routerLink="/clinica/agenda"><span class="step">02</span><strong>Marque um atendimento</strong><small>Consulte o calendário e gerencie horários.</small><b>Agendar →</b></a></div>
+</section>

@@ -1,0 +1,46 @@
+<body>
+
+   <div class="container">
+      <div class="logo">
+         <img src="imgs/logo_filled.svg" width="30px" alt="">
+         <h1>Sinapse</h1>
+      </div>
+
+      <h2>Faça Login</h2>
+
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+         <fieldset class="account-types">
+            <legend>Escolha seu espaço</legend>
+            <div class="account-switch" [class.clinic-selected]="selectedRole === 'clinic'">
+            <label class="account-option">
+               <input type="radio" name="accountRole" value="patient" [(ngModel)]="selectedRole" required>
+               <span>Paciente</span>
+            </label>
+            <label class="account-option">
+               <input type="radio" name="accountRole" value="clinic" [(ngModel)]="selectedRole" required>
+               <span>Clínica</span>
+            </label>
+            </div>
+         </fieldset>
+         <div class="input-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" [(ngModel)]="email" placeholder="Digite seu e-mail" required>
+         </div>
+
+         <div class="input-group">
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Digite sua senha"
+               required>
+         </div>
+
+         <button type="submit" [disabled]="loading || !loginForm.valid || !selectedRole" class="btn">Entrar</button>
+         <p class="demo-note">A escolha do espaço é salva neste navegador. Seu e-mail e sua senha são verificados na conta cadastrada.</p>
+
+         <p class="login-link">
+            Ainda não tem uma conta? <a routerLink="/register">Cadastre-se</a>
+         </p>
+      </form>
+
+   </div>
+
+</body>

@@ -1,0 +1,263 @@
+:host {
+   width: 100%;
+   height: 100%;
+   min-height: 0;
+}
+
+main {
+   display: flex;
+   flex-direction: column;
+   padding: 36px;
+   overflow-y: auto;
+}
+
+.home-title {
+   font-size: 2rem;
+   font-weight: bold;
+   margin: 12px 0;
+}
+
+.overview-cards {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   min-width: 0;
+   max-width: 1200px;
+   width: 100%;
+   margin-bottom: 8px;
+   gap: 8px;
+
+   justify-content: start;
+}
+
+.overview-card {
+   display: flex;
+   flex-direction: column;
+   align-items: start;
+   padding: 2rem;
+   justify-content: space-between;
+
+   width: clamp(100px, 100%, 200px);
+   border-radius: 20px;
+   background-color: var(--primary-color);
+}
+
+.overview-card h3 {
+   font-size: 1.25rem;
+   color: var(--bg-grey);
+}
+
+.overview-card h1 {
+   font-size: 3rem;
+   font-weight: 600;
+}
+
+.home-top {
+   display: flex;
+   flex-direction: row;
+   width: 100%;
+   justify-content: space-between;
+   align-items: center;
+   flex-wrap: wrap;
+   margin-bottom: 12px;
+   gap: 8px;
+   overflow-y: visible;
+}
+
+.filters-wrapper {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: row;
+   padding: 8px 0;
+   gap: 8px;
+   overflow-x: auto;
+   overflow-y: visible;
+}
+
+.filter-container {
+   width: fit-content;
+   padding: 1rem 1.5rem;
+   border-radius: 20px;
+   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.233);
+
+   cursor: pointer;
+   background-color: white;
+   color: var(--bg-grey);
+   font-size: 1.3rem;
+}
+
+.filter-container.add-btn {
+   background-color: var(--highlight-purple);
+   height: fit-content;
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   border: 0;
+   color: white;
+}
+
+.filter-container.add-btn img {
+   filter: brightness(0) saturate(100%) invert(98%) sepia(2%) saturate(0%) hue-rotate(345deg) brightness(104%) contrast(101%);
+}
+
+.filter-container.active {
+   color: white;
+   background-color: black;
+}
+
+
+.records {
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+}
+
+.record-container {
+   display: flex;
+   flex-direction: column;
+   padding: 10px;
+
+   background-color: white;
+   border-radius: 20px;
+   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.233);
+
+   transition: scale 0.05s ease-in-out;
+}
+
+.record-container:active {
+   scale: 0.98;
+}
+
+.record-top {
+   display: flex;
+   margin-bottom: 8px;
+   justify-content: space-between;
+}
+
+.record-date {
+   color: var(--border-grey);
+   font-size: 1.25rem;
+}
+
+.record-title {
+   font-size: 1.5rem;
+   font-weight: 600;
+   margin-bottom: 3px;
+}
+
+.record-description {
+   font-size: 1.25rem;
+   color: var(--bg-grey);
+}
+
+.record-container .record-content {
+   display: none;
+}
+
+.record-container.open .record-content {
+   display: flex;
+}
+
+.record-content {
+   flex-direction: column;
+   width: 100%;
+   margin-top: 24px;
+   gap: 8px;
+   font-size: 1.25rem;
+}
+
+.record-content-label {
+   font-weight: bold;
+   margin-right: 8px;
+}
+
+.record-content-data {
+   color: var(--bg-grey);
+}
+
+.record-content span {
+   display: flex;
+   flex-direction: row;
+}
+
+.record-attatchment {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+   padding: 1rem;
+   border-radius: 20px;
+   margin-top: 12px;
+
+   border: 1px solid var(--border-grey);
+   background-color: rgb(231, 231, 231);
+}
+
+.record-attatchment span {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+}
+
+.attachment-icon {
+   width: 30px;
+   height: 30px;
+}
+
+.attachment-title {
+   font-size: 1.25rem;
+   font-weight: 600;
+   margin-left: 5px;
+}
+
+.attachment-download-btn {
+   padding: 8px;
+   border-radius: 5px;
+   background-color: rgb(255, 255, 255);
+}
+
+@media (max-width: 650px) {
+   main {
+      padding: 12px;
+   }
+
+   .overview-cards {
+      justify-content: center;
+   }
+
+   .overview-card {
+      width: 100px;
+   }
+
+   .overview-card h1 {
+      width: 2rem;
+   }
+}
+
+.record-dialog { width: min(92vw, 680px); max-height: 88vh; margin: auto; padding: 26px; border: 1px solid #ded1e9; border-radius: 20px; background: white; color: #302a37; overflow-y: auto; box-shadow: 0 20px 70px #21132d33; }
+.record-dialog::backdrop { background: #231a2c99; }
+.dialog-head { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+.dialog-kicker { color: var(--highlight-purple); font-size: 1.1rem; font-weight: 700; letter-spacing: .13em; }
+.dialog-head h2 { margin: 6px 0; font-size: 2.2rem; font-weight: 700; }
+.dialog-close { border: 0; background: transparent; color: var(--bg-grey); font-size: 2.8rem; cursor: pointer; }
+.dialog-note { margin: 8px 0 20px; color: var(--bg-grey); font-size: 1.3rem; line-height: 1.4; }
+.mode-options { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-bottom: 18px; border: 0; }
+.mode-options legend { margin-bottom: 9px; font-size: 1.4rem; font-weight: 700; }
+.mode-options label { display: flex; align-items: center; gap: 6px; font-size: 1.3rem; cursor: pointer; }
+.mode-options input { accent-color: var(--highlight-purple); }
+.record-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+.record-fields label { display: grid; align-content: start; gap: 7px; font-size: 1.3rem; font-weight: 600; }
+.record-fields .full-width { grid-column: 1 / -1; }
+.record-fields input, .record-fields select, .record-fields textarea { width: 100%; min-width: 0; border: 1px solid #d4cadc; border-radius: 9px; padding: 10px; background: white; color: #302a37; font: inherit; font-size: 1.4rem; }
+.record-fields textarea { resize: vertical; }
+.dialog-actions { display: flex; justify-content: end; gap: 10px; margin-top: 24px; }
+.dialog-actions button { padding: 11px 15px; border-radius: 10px; font-size: 1.3rem; font-weight: 700; cursor: pointer; }
+.cancel-button { border: 1px solid #d4cadc; background: white; color: #66449b; }
+.save-button { border: 1px solid var(--highlight-purple); background: var(--highlight-purple); color: white; }
+.record-dialog button:focus-visible, .record-fields input:focus-visible, .record-fields select:focus-visible, .record-fields textarea:focus-visible { outline: 3px solid var(--counterhighlight-orange); outline-offset: 2px; }
+@media (max-width: 650px) {
+   .record-dialog { padding: 19px; }
+   .record-fields { grid-template-columns: 1fr; }
+   .dialog-actions { flex-wrap: wrap; }
+   .dialog-actions button { flex: 1 1 130px; }
+}
