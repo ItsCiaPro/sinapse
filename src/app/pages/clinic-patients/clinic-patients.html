@@ -10,24 +10,24 @@
       <label>Nome civil (opcional) <input name="civilName" [(ngModel)]="draft.civilName" maxlength="100"></label>
       <label>Data de nascimento <input type="date" name="birthDate" [(ngModel)]="draft.birthDate" required></label>
       <label>CPF <input name="cpf" [(ngModel)]="draft.cpf" required maxlength="14" inputmode="numeric" placeholder="000.000.000-00"></label>
-      <label>RG <input name="rg" [(ngModel)]="draft.rg" required maxlength="30"></label>
+      <label>RG (opcional) <input name="rg" [(ngModel)]="draft.rg" maxlength="30"></label>
       <label>Sexo <select name="sex" [(ngModel)]="draft.sex" required><option value="" disabled>Selecione</option><option>Feminino</option><option>Masculino</option><option>Intersexo</option><option>Não informado</option></select></label>
     </div></fieldset>
     <fieldset class="form-section"><legend>Contatos</legend><div class="form-grid">
-      <label>E-mail <input type="email" name="email" [(ngModel)]="draft.email" required maxlength="120"></label>
-      <label>Telefone 1 <input type="tel" name="phone1" [(ngModel)]="draft.phone1" required maxlength="25"></label>
+      <label>E-mail <input type="email" name="email" [(ngModel)]="draft.email" maxlength="120"></label>
+      <label>Telefone 1 <input type="tel" name="phone1" [(ngModel)]="draft.phone1" maxlength="25"></label>
       <label>Telefone 2 (opcional) <input type="tel" name="phone2" [(ngModel)]="draft.phone2" maxlength="25"></label>
-      <label>WhatsApp <input type="tel" name="whatsapp" [(ngModel)]="draft.whatsapp" required maxlength="25"></label>
+      <label>WhatsApp <input type="tel" name="whatsapp" [(ngModel)]="draft.whatsapp" maxlength="25"></label>
     </div></fieldset>
     <fieldset class="form-section"><legend>Endereço</legend><div class="form-grid">
-      <label>CEP <input name="zipCode" [(ngModel)]="draft.zipCode" required maxlength="10" inputmode="numeric"></label>
-      <label>Endereço <input name="street" [(ngModel)]="draft.street" required maxlength="120"></label>
+      <label>CEP <input name="zipCode" [(ngModel)]="draft.zipCode" maxlength="10" inputmode="numeric"></label>
+      <label>Endereço <input name="street" [(ngModel)]="draft.street" maxlength="120"></label>
       <label>Complemento <input name="complement" [(ngModel)]="draft.complement" maxlength="80" placeholder="Se houver"></label>
-      <label>Número <input name="number" [(ngModel)]="draft.number" required maxlength="15"></label>
-      <label>Cidade <input name="city" [(ngModel)]="draft.city" required maxlength="80"></label>
-      <label>Estado <input name="addressState" [(ngModel)]="draft.addressState" required maxlength="50"></label>
-      <label>País <input name="country" [(ngModel)]="draft.country" required maxlength="60"></label>
-      <label>Bairro <input name="neighborhood" [(ngModel)]="draft.neighborhood" required maxlength="80"></label>
+      <label>Número <input name="number" [(ngModel)]="draft.number" maxlength="15"></label>
+      <label>Cidade <input name="city" [(ngModel)]="draft.city" maxlength="80"></label>
+      <label>Estado <input name="addressState" [(ngModel)]="draft.addressState" maxlength="50"></label>
+      <label>País <input name="country" [(ngModel)]="draft.country" maxlength="60"></label>
+      <label>Bairro <input name="neighborhood" [(ngModel)]="draft.neighborhood" maxlength="80"></label>
     </div></fieldset>
     <fieldset class="form-section"><legend>Dados sensíveis (opcionais)</legend><div class="form-grid">
       <label>Gênero <input name="gender" [(ngModel)]="draft.gender" maxlength="50"></label>
@@ -37,7 +37,7 @@
       <label>Estado civil <input name="maritalStatus" [(ngModel)]="draft.maritalStatus" maxlength="50"></label>
       <label>Religião <input name="religion" [(ngModel)]="draft.religion" maxlength="60"></label>
       <label>Profissão <input name="occupation" [(ngModel)]="draft.occupation" maxlength="80"></label>
-      <label>Estado de vida <select name="lifeStatus" [(ngModel)]="draft.lifeStatus" required><option value="Ativo">Ativo</option><option value="Óbito">Óbito</option></select></label>
+      <label>Estado de vida <select name="lifeStatus" [(ngModel)]="draft.lifeStatus"><option value="Ativo">Ativo</option><option value="Óbito">Óbito</option></select></label>
     </div></fieldset>
     <fieldset class="form-section"><legend>Dados familiares</legend>
       @for (relative of draft.family; track $index; let i = $index) { <div class="added-entry"><strong>{{ relative.name }} · {{ relative.relationship }}</strong><button type="button" (click)="draft.family.splice(i, 1)">Remover</button></div> }
@@ -55,8 +55,7 @@
       <label>Plano <input name="plan" [(ngModel)]="insuranceDraft.plan" maxlength="100"></label>
       <label>Nº da carteirinha <input name="cardNumber" [(ngModel)]="insuranceDraft.cardNumber" maxlength="60"></label>
       <label>Acomodação <input name="accommodation" [(ngModel)]="insuranceDraft.accommodation" maxlength="80"></label>
-      <label class="checkbox-field"><input type="checkbox" name="indefinite" [(ngModel)]="insuranceDraft.indefinite"> Validade indeterminada</label>
-      @if (!insuranceDraft.indefinite) { <label>Validade <input type="date" name="planExpiry" [(ngModel)]="insuranceDraft.expirationDate"></label> }
+      <div class="insurance-validity"><label>Validade <input type="date" name="planExpiry" [(ngModel)]="insuranceDraft.expirationDate"></label>@if (insuranceDraft.expirationDate) { <button type="button" class="clear-date" aria-label="Remover validade e deixar indeterminada" (click)="insuranceDraft.expirationDate = ''">×</button> } @else { <span class="validity-hint">Sem data: validade indeterminada</span> }</div>
       </div><button type="button" class="secondary-button section-action" (click)="addInsurance()">+ Adicionar convênio</button>
     </fieldset>
     @if (error) { <p class="form-error" role="alert">{{ error }}</p> }
@@ -69,7 +68,7 @@
       <div class="patient-details"><p><strong>ID:</strong> {{ patient.id }}</p><p><strong>Nome civil:</strong> {{ patient.civilName || '—' }}</p><p><strong>Nascimento:</strong> {{ patient.birthDate }}</p><p><strong>RG:</strong> {{ patient.rg }}</p><p><strong>Sexo:</strong> {{ patient.sex }}</p><p><strong>E-mail:</strong> {{ patient.email }}</p><p><strong>Telefones:</strong> {{ patient.phone1 }} {{ patient.phone2 }}</p><p><strong>WhatsApp:</strong> {{ patient.whatsapp }}</p><p><strong>Endereço:</strong> {{ patient.street }}, {{ patient.number }} {{ patient.complement }} · {{ patient.neighborhood }}, {{ patient.city }}/{{ patient.addressState }} · {{ patient.zipCode }} · {{ patient.country }}</p>
       <p><strong>Gênero:</strong> {{ patient.gender || '—' }}</p><p><strong>Etnia:</strong> {{ patient.ethnicity || '—' }}</p><p><strong>Naturalidade:</strong> {{ patient.birthplace || '—' }} / {{ patient.birthState || '—' }}</p><p><strong>Estado civil:</strong> {{ patient.maritalStatus || '—' }}</p><p><strong>Religião:</strong> {{ patient.religion || '—' }}</p><p><strong>Profissão:</strong> {{ patient.occupation || '—' }}</p>
       <div class="wide"><strong>Familiares</strong>@for (f of patient.family; track $index) { <p>{{ f.name }} · {{ f.relationship }} · {{ f.email }} · {{ f.phone }} · WhatsApp {{ f.whatsapp }} {{ f.notes }}</p> } @empty { <p>Nenhum familiar cadastrado.</p> }</div>
-      <div class="wide"><strong>Convênios</strong>@for (plan of patient.insurances; track $index) { <p>{{ plan.category }} · {{ plan.plan }} · Nº {{ plan.cardNumber }} · {{ plan.indefinite ? 'Indeterminado' : plan.expirationDate }} · {{ plan.accommodation }}</p> } @empty { <p>Nenhum convênio cadastrado.</p> }</div></div>
+      <div class="wide"><strong>Convênios</strong>@for (plan of patient.insurances; track $index) { <p>{{ plan.category }} · {{ plan.plan }} · Nº {{ plan.cardNumber }} · {{ plan.expirationDate || 'Indeterminada' }} · {{ plan.accommodation }}</p> } @empty { <p>Nenhum convênio cadastrado.</p> }</div></div>
     </details>
   }</div> } @else { <div class="empty"><strong>Nenhum paciente encontrado</strong><p>{{ query ? 'Tente outro nome, CPF ou ID.' : 'Cadastre um paciente para começar.' }}</p></div> }
 </section>

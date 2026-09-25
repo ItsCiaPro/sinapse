@@ -22,7 +22,6 @@ export interface ClinicInsurance {
   plan: string;
   cardNumber: string;
   expirationDate: string;
-  indefinite: boolean;
   accommodation: string;
 }
 

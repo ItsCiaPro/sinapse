@@ -21,7 +21,7 @@ export class ClinicPatients {
       family: [], insurances: [] };
   }
   private emptyFamily(): ClinicFamilyMember { return { name: '', relationship: '', notes: '', email: '', phone: '', whatsapp: '' }; }
-  private emptyInsurance(): ClinicInsurance { return { category: 'Particular', plan: '', cardNumber: '', expirationDate: '', indefinite: false, accommodation: '' }; }
+  private emptyInsurance(): ClinicInsurance { return { category: 'Particular', plan: '', cardNumber: '', expirationDate: '', accommodation: '' }; }
 
   addFamily(): void {
     const f = this.familyDraft;
@@ -33,16 +33,16 @@ export class ClinicPatients {
 
   addInsurance(): void {
     const p = this.insuranceDraft;
-    if (!p.plan.trim() || !p.cardNumber.trim() || !p.accommodation.trim() || (!p.indefinite && !p.expirationDate)) {
-      this.error = 'Preencha plano, carteirinha, acomodação e validade do convênio.'; return;
+    if (!p.plan.trim() || !p.cardNumber.trim() || !p.accommodation.trim()) {
+      this.error = 'Preencha plano, carteirinha e acomodação do convênio.'; return;
     }
-    this.draft.insurances.push({ ...p, expirationDate: p.indefinite ? '' : p.expirationDate });
+    this.draft.insurances.push({ ...p });
     this.insuranceDraft = this.emptyInsurance(); this.error = '';
   }
 
   save(): void {
     const d = this.draft;
-    if (!d.name.trim() || !d.birthDate || !d.rg.trim() || !d.sex || !d.email.trim() || !d.phone1.trim() || !d.whatsapp.trim() || !d.zipCode.trim() || !d.street.trim() || !d.number.trim() || !d.city.trim() || !d.addressState.trim() || !d.country.trim() || !d.neighborhood.trim() || !d.lifeStatus) return;
+    if (!d.name.trim() || !d.birthDate || !d.sex) return;
     if (d.cpf.replace(/\D/g, '').length !== 11) { this.error = 'Informe um CPF com 11 dígitos.'; return; }
     if (!this.clinic.addPatient(d)) { this.error = 'Este CPF já está cadastrado.'; return; }
     this.draft = this.emptyPatient(); this.familyDraft = this.emptyFamily(); this.insuranceDraft = this.emptyInsurance();

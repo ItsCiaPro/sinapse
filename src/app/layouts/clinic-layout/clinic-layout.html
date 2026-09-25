@@ -1,7 +1,7 @@
 <div class="record-layout">
   <app-sidebar-nav mode="clinic"></app-sidebar-nav>
   <div class="record-layout-content">
-    <app-clinic-header [clinicName]="clinicName"></app-clinic-header>
+    <app-clinic-header [clinicName]="profile.profile().name"></app-clinic-header>
     <main class="clinic-content"><router-outlet></router-outlet></main>
   </div>
 </div>

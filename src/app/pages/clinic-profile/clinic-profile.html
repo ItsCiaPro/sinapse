@@ -1,0 +1,56 @@
+<div class="clinic-profile">
+  <div class="profile-intro"><span class="dialog-kicker">DADOS DA INSTITUIÇÃO</span><h1>Clínica</h1><p>Atualize a identificação, o contato e o endereço. O nome salvo aparece no cabeçalho do seu espaço.</p></div>
+  @if (editing) {
+    <form class="clinic-edit profile-card" #clinicForm="ngForm" (ngSubmit)="save()">
+      <div class="section-heading"><h2>Editar informações</h2><button class="text-action" type="button" (click)="cancel()">Fechar</button></div>
+      <p class="dialog-note">Preencha os campos marcados com * para salvar.</p>
+      <fieldset><legend>Identificação</legend><div class="dialog-fields clinic-fields">
+        <label>Código *<input name="code" [(ngModel)]="draft.code" required maxlength="40" placeholder="Código usado pela instituição"></label>
+        <label>Nome *<input name="name" [(ngModel)]="draft.name" required maxlength="100" placeholder="Nome da clínica"></label>
+      </div></fieldset>
+      <fieldset><legend>Contato</legend><div class="dialog-fields clinic-fields">
+        <label>E-mail<input type="email" name="email" [(ngModel)]="draft.email" maxlength="120"></label>
+        <label>Telefone 1<input type="tel" name="phone1" [(ngModel)]="draft.phone1" maxlength="25"></label>
+        <label>Telefone 2<input type="tel" name="phone2" [(ngModel)]="draft.phone2" maxlength="25"></label>
+        <label>WhatsApp<input type="tel" name="whatsapp" [(ngModel)]="draft.whatsapp" maxlength="25"></label>
+      </div></fieldset>
+      <fieldset><legend>Endereço</legend><div class="dialog-fields clinic-fields">
+        <label>CEP *<input name="zipCode" [(ngModel)]="draft.zipCode" required maxlength="10" inputmode="numeric"></label>
+        <label>Endereço *<input name="street" [(ngModel)]="draft.street" required maxlength="120"></label>
+        <label>Complemento *<input name="complement" [(ngModel)]="draft.complement" required maxlength="80" placeholder="Se não houver, informe Sem complemento"></label>
+        <label>Número *<input name="number" [(ngModel)]="draft.number" required maxlength="15"></label>
+        <label>Cidade *<input name="city" [(ngModel)]="draft.city" required maxlength="80"></label>
+        <label>Estado *<input name="state" [(ngModel)]="draft.state" required maxlength="50"></label>
+        <label>País *<input name="country" [(ngModel)]="draft.country" required maxlength="60"></label>
+        <label>Bairro *<input name="neighborhood" [(ngModel)]="draft.neighborhood" required maxlength="80"></label>
+      </div></fieldset>
+      @if (error) { <p class="form-error" role="alert">{{ error }}</p> }
+      <div class="dialog-actions"><button class="secondary-button" type="button" (click)="cancel()">Cancelar</button><button class="primary-button" type="submit" [disabled]="clinicForm.invalid">Salvar alterações</button></div>
+    </form>
+  }
+  <div class="profile-container">
+    <div class="profile-column">
+      <section class="profile-group"><div class="section-heading"><h2>Identificação</h2><button class="text-action" type="button" (click)="edit()">Editar <span aria-hidden="true">✎</span></button></div><div class="profile-card">
+        <div class="profile-row"><span class="row-label">Código</span><strong class="row-value" [class.empty-value]="!clinic.profile().code">{{ clinic.profile().code || 'Não informado' }}</strong></div>
+        <div class="profile-row"><span class="row-label">Nome</span><strong class="row-value">{{ clinic.profile().name }}</strong></div>
+      </div></section>
+      <section class="profile-group"><div class="section-heading"><h2>Contato</h2><button class="text-action" type="button" (click)="edit()">Editar <span aria-hidden="true">✎</span></button></div><div class="profile-card">
+        <div class="profile-row"><span class="row-label">E-mail</span><strong class="row-value">{{ clinic.profile().email || 'Não informado' }}</strong></div>
+        <div class="profile-row"><span class="row-label">Telefone 1</span><strong class="row-value">{{ clinic.profile().phone1 || 'Não informado' }}</strong></div>
+        <div class="profile-row"><span class="row-label">Telefone 2</span><strong class="row-value">{{ clinic.profile().phone2 || 'Não informado' }}</strong></div>
+        <div class="profile-row"><span class="row-label">WhatsApp</span><strong class="row-value">{{ clinic.profile().whatsapp || 'Não informado' }}</strong></div>
+      </div></section>
+    </div>
+    <div class="profile-column"><section class="profile-group"><div class="section-heading"><h2>Endereço</h2><button class="text-action" type="button" (click)="edit()">Editar <span aria-hidden="true">✎</span></button></div><div class="profile-card">
+      <div class="profile-row"><span class="row-label">CEP</span><strong class="row-value">{{ clinic.profile().zipCode || 'Não informado' }}</strong></div>
+      <div class="profile-row"><span class="row-label">Endereço</span><strong class="row-value">{{ clinic.profile().street || 'Não informado' }}</strong></div>
+      <div class="profile-row"><span class="row-label">Complemento</span><strong class="row-value">{{ clinic.profile().complement || 'Não informado' }}</strong></div>
+      <div class="profile-row"><span class="row-label">Número</span><strong class="row-value">{{ clinic.profile().number || 'Não informado' }}</strong></div>
+      <div class="profile-row"><span class="row-label">Cidade</span><strong class="row-value">{{ clinic.profile().city || 'Não informado' }}</strong></div>
+      <div class="profile-row"><span class="row-label">Estado</span><strong class="row-value">{{ clinic.profile().state || 'Não informado' }}</strong></div>
+      <div class="profile-row"><span class="row-label">País</span><strong class="row-value">{{ clinic.profile().country || 'Não informado' }}</strong></div>
+      <div class="profile-row"><span class="row-label">Bairro</span><strong class="row-value">{{ clinic.profile().neighborhood || 'Não informado' }}</strong></div>
+    </div></section></div>
+  </div>
+  <p class="storage-note">As informações da clínica são salvas neste navegador e não são enviadas ao banco de dados.</p>
+</div>

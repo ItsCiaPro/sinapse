@@ -52,6 +52,11 @@
                   <img src="imgs/icons/history.svg" class="nav-icon" alt=""><span>Agenda</span>
                </a>
             </li>
+            <li routerLinkActive="active">
+               <a routerLink="/clinica/perfil" (click)="isOpen = false">
+                  <img src="imgs/icons/user.svg" class="nav-icon" alt=""><span>Clínica</span>
+               </a>
+            </li>
             } @else {
             <li routerLinkActive="active">
                <a routerLink="/home">

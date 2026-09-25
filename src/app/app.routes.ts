@@ -16,6 +16,7 @@ import { ClinicProfessionals } from './pages/clinic-professionals/clinic-profess
 import { ClinicAttendances } from './pages/clinic-attendances/clinic-attendances';
 import { ClinicPatients } from './pages/clinic-patients/clinic-patients';
 import { ClinicAppointments } from './pages/clinic-appointments/clinic-appointments';
+import { ClinicProfilePage } from './pages/clinic-profile/clinic-profile';
 
 export const routes: Routes = [
 
@@ -34,6 +35,7 @@ export const routes: Routes = [
             { path: 'pacientes', component: ClinicPatients, data: { title: 'Pacientes' } },
             { path: 'atendimentos', component: ClinicAttendances, data: { title: 'Atendimentos' } },
             { path: 'agenda', component: ClinicAppointments, data: { title: 'Agenda' } },
+            { path: 'perfil', component: ClinicProfilePage, data: { title: 'Clínica' } },
         ],
     },
 

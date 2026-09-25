@@ -4,6 +4,7 @@ import { AccountMode } from '../../services/account-mode';
 import { Supabase } from '../../services/supabase';
 import { SidebarNav } from '../../components/sidebar-nav/sidebar-nav';
 import { ClinicHeader } from '../../components/clinic-header/clinic-header';
+import { ClinicProfile } from '../../services/clinic-profile';
 
 @Component({
   selector: 'app-clinic-layout',
@@ -14,11 +15,11 @@ import { ClinicHeader } from '../../components/clinic-header/clinic-header';
 export class ClinicLayout implements OnInit {
   private accountMode = inject(AccountMode);
   private supabase = inject(Supabase);
-  clinicName = 'Minha clínica';
+  readonly profile = inject(ClinicProfile);
 
   async ngOnInit(): Promise<void> {
     const user = await this.supabase.getCurrentUser();
-    this.clinicName = this.accountMode.getRegistration(user?.email ?? '')?.clinicName || 'Minha clínica';
+    if (user) this.profile.initialize(user.id, this.accountMode.getRegistration(user.email ?? '')?.clinicName);
   }
 
 }
