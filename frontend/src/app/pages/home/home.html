@@ -14,8 +14,10 @@
          (keydown.arrowright)="onCarouselArrow($event, 1)">
          @for (doc of documents; track $index; let i = $index) {
          <div class="item" [style.background-color]="documentsColor[doc.documentType]"
-            [class.light-card]="doc.documentType === 'Cartão de Vacinação'">
-            <div class="item-header">
+            [class.light-card]="doc.documentType === 'Cartão de Vacinação'"
+            [class.expanded]="isExpanded(i)">
+            <div class="item-content">
+            <div class="item-header" [attr.aria-hidden]="isExpanded(i)">
                <div class="item-top">
                   <h1>{{ doc.documentType }}</h1>
                   <h1>{{ doc.status }}</h1>
@@ -30,9 +32,10 @@
                </div>
             </div>
 
-            @if (isExpanded(i)) {
                <div class="item-bottom" [id]="'document-details-' + i" role="region"
-                  [attr.aria-label]="'Detalhes de ' + doc.documentType">
+                  [attr.aria-label]="'Detalhes de ' + doc.documentType"
+                  [attr.aria-hidden]="!isExpanded(i)"
+                  [attr.tabindex]="isExpanded(i) ? 0 : -1">
                   <h2 class="details-heading">Dados da carteirinha</h2>
                   <dl class="details-list">
                   @for (cardInfo of doc.cardDetails | keyvalue: keepDetailOrder; track cardInfo.key) {
@@ -43,7 +46,7 @@
                   }
                   </dl>
                </div>
-            }
+            </div>
             <button class="show-details-btn" type="button" (click)="toggleDetails(i)"
                [attr.aria-expanded]="isExpanded(i)" [attr.aria-controls]="'document-details-' + i">
                <img src="imgs/icons/down-arrow.svg" alt="" [class.rotated]="isExpanded(i)">

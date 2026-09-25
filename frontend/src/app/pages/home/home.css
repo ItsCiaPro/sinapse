@@ -102,10 +102,9 @@ main {
 .carousel .item {
    display: flex;
    flex-direction: column;
-   justify-content: space-between;
    flex: 0 0 100%;
    min-width: 0;
-   min-height: 200px;
+   height: 320px;
    border-radius: 20px;
    padding: 20px;
    scroll-snap-align: start;
@@ -115,6 +114,46 @@ main {
 
 .carousel .item.light-card {
    color: #292139;
+}
+
+.carousel .item-content {
+   display: grid;
+   grid-template-rows: minmax(0, 1fr);
+   flex: 1;
+   min-height: 0;
+}
+
+.carousel .item-header,
+.carousel .item-bottom {
+   grid-area: 1 / 1;
+   min-width: 0;
+   min-height: 0;
+}
+
+.carousel .item-header {
+   opacity: 1;
+   visibility: visible;
+   transition: opacity .2s ease .18s, visibility 0s linear .18s;
+}
+
+.carousel .item-bottom {
+   opacity: 0;
+   visibility: hidden;
+   pointer-events: none;
+   transition: opacity .18s ease, visibility 0s linear .18s;
+}
+
+.carousel .item.expanded .item-header {
+   opacity: 0;
+   visibility: hidden;
+   transition: opacity .18s ease, visibility 0s linear .18s;
+}
+
+.carousel .item.expanded .item-bottom {
+   opacity: 1;
+   visibility: visible;
+   pointer-events: auto;
+   transition: opacity .2s ease .18s, visibility 0s linear .18s;
 }
 
 .carousel .item-top {
@@ -149,6 +188,7 @@ main {
    color: inherit;
    cursor: pointer;
    margin-top: 14px;
+   flex-shrink: 0;
 }
 
 .carousel .show-details-btn:hover {
@@ -165,9 +205,10 @@ main {
 }
 
 .carousel .item-bottom {
-   border-top: 1px solid rgba(255, 255, 255, .5);
-   padding-top: 16px;
-   margin-top: 18px;
+   overflow-y: auto;
+   overscroll-behavior-y: contain;
+   scrollbar-width: thin;
+   padding-right: 4px;
 }
 
 .carousel .details-heading {
@@ -178,13 +219,13 @@ main {
 
 .carousel .details-list {
    display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
    gap: 6px;
 }
 
 .carousel .detail-row {
    display: grid;
-   grid-template-columns: minmax(110px, 42%) minmax(0, 1fr);
-   gap: 10px;
+   gap: 3px;
    align-items: start;
    padding: 9px 11px;
    border: 1px solid rgba(255, 255, 255, .22);
@@ -206,17 +247,20 @@ main {
    overflow-wrap: anywhere;
 }
 
-.carousel .item.light-card .item-bottom {
-   border-top-color: rgba(41, 33, 57, .25);
-}
-
 .carousel .item.light-card .detail-row {
    border-color: rgba(41, 33, 57, .12);
    background: rgba(255, 255, 255, .34);
 }
 
 @media (max-width: 500px) {
-   .carousel .detail-row { grid-template-columns: 1fr; gap: 2px; }
+   .carousel .details-list { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .carousel .item-header,
+   .carousel .item-bottom,
+   .carousel .item.expanded .item-header,
+   .carousel .item.expanded .item-bottom { transition: none; }
 }
 
 
