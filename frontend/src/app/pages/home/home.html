@@ -31,10 +31,17 @@
             </div>
 
             @if (isExpanded(i)) {
-               <div class="item-bottom" [id]="'document-details-' + i">
-                  @for (cardInfo of doc.cardDetails | keyvalue; track cardInfo.key) {
-                  <h2>{{ cardInfo.key }}: {{ cardInfo.value }}</h2>
+               <div class="item-bottom" [id]="'document-details-' + i" role="region"
+                  [attr.aria-label]="'Detalhes de ' + doc.documentType">
+                  <h2 class="details-heading">Dados da carteirinha</h2>
+                  <dl class="details-list">
+                  @for (cardInfo of doc.cardDetails | keyvalue: keepDetailOrder; track cardInfo.key) {
+                     <div class="detail-row">
+                        <dt>{{ detailLabel(cardInfo.key) }}</dt>
+                        <dd>{{ detailValue(cardInfo.key, cardInfo.value) }}</dd>
+                     </div>
                   }
+                  </dl>
                </div>
             }
             <button class="show-details-btn" type="button" (click)="toggleDetails(i)"

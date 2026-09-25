@@ -44,6 +44,29 @@ export class Home implements OnInit, OnDestroy {
   documentsColor = documentTypeColor;
   currentDocumentIndex = 0;
 
+  private readonly detailLabels: Record<string, string> = {
+    cardNumber: 'Número da carteirinha',
+    planName: 'Nome do plano',
+    planType: 'Tipo de plano',
+    expirationDate: 'Validade',
+    accommodations: 'Acomodação',
+  };
+
+  readonly keepDetailOrder = () => 0;
+
+  detailLabel(key: string): string {
+    return this.detailLabels[key] ?? key.replace(/([a-z\d])([A-Z])/g, '$1 $2')
+      .replace(/[_-]+/g, ' ').replace(/^./, initial => initial.toLocaleUpperCase('pt-BR'));
+  }
+
+  detailValue(key: string, value: string): string {
+    if (key === 'expirationDate' && /^\d{4}-(0[1-9]|1[0-2])$/.test(value)) {
+      const [year, month] = value.split('-');
+      return `${month}/${year}`;
+    }
+    return value;
+  }
+
   async ngOnInit(): Promise<void> {
     this.activeAccess = this.demoShare.getActive();
     if (this.activeAccess) this.qrImage = await QRCode.toDataURL(this.activeAccess.url, { width: 180, margin: 2 });
