@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { inject } from '@angular/core';
 import { Auth } from '../../services/auth/auth';
@@ -10,6 +10,7 @@ import { Auth } from '../../services/auth/auth';
   styleUrl: './sidebar-nav.css',
 })
 export class SidebarNav {
+  @Input() mode: 'patient' | 'clinic' = 'patient';
   private authService = inject(Auth);
   toastMessage = '';
   loading = false;

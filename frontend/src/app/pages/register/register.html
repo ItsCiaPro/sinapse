@@ -11,14 +11,16 @@
 
          <fieldset class="account-types">
             <legend>Como você vai usar o Sinapse?</legend>
-            <label class="account-option" [class.selected]="selectedRole === 'patient'">
+            <div class="account-switch" [class.clinic-selected]="selectedRole === 'clinic'">
+            <label class="account-option">
                <input type="radio" name="accountRole" value="patient" [(ngModel)]="selectedRole" required>
-               <span><strong>Sou paciente</strong><small>Organizar meu histórico de saúde</small></span>
+               <span>Paciente</span>
             </label>
-            <label class="account-option" [class.selected]="selectedRole === 'clinic'">
+            <label class="account-option">
                <input type="radio" name="accountRole" value="clinic" [(ngModel)]="selectedRole" required>
-               <span><strong>Sou clínica</strong><small>Gerenciar equipe e atendimentos</small></span>
+               <span>Clínica</span>
             </label>
+            </div>
          </fieldset>
 
          @if (selectedRole === 'clinic') {
