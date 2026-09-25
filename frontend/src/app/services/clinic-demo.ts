@@ -27,6 +27,11 @@ export class ClinicDemo {
   readonly professionals = signal<ClinicProfessional[]>([]);
   readonly attendances = signal<ClinicAttendance[]>([]);
 
+  clear(): void {
+    this.professionals.set([]);
+    this.attendances.set([]);
+  }
+
   addProfessional(entry: Omit<ClinicProfessional, 'id'>): void {
     this.professionals.update(items => [{ ...entry, id: crypto.randomUUID() }, ...items]);
   }
