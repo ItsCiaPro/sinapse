@@ -1,0 +1,24 @@
+<div class="clinic-shell">
+  <aside class="clinic-sidebar" [class.open]="menuOpen">
+    <a class="brand" routerLink="/clinica" (click)="menuOpen = false">
+      <img src="imgs/logo_filled.svg" alt="" width="42" height="42">
+      <span><strong>Sinapse</strong><small>ESPAÇO DA CLÍNICA</small></span>
+    </a>
+    <div class="sidebar-label">GESTÃO</div>
+    <nav aria-label="Navegação da clínica">
+      <a routerLink="/clinica" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="menuOpen = false">Visão geral</a>
+      <a routerLink="/clinica/profissionais" routerLinkActive="active" (click)="menuOpen = false">Profissionais</a>
+      <a routerLink="/clinica/atendimentos" routerLinkActive="active" (click)="menuOpen = false">Atendimentos</a>
+    </nav>
+    <button class="logout" type="button" (click)="logOut()">Sair da conta</button>
+  </aside>
+  @if (menuOpen) { <button class="backdrop" type="button" aria-label="Fechar menu" (click)="menuOpen = false"></button> }
+  <div class="clinic-main">
+    <header class="clinic-topbar">
+      <button class="menu-toggle" type="button" aria-label="Abrir menu" (click)="menuOpen = !menuOpen">☰</button>
+      <div><span class="eyebrow">ÁREA DA CLÍNICA</span><h1>{{ clinicName }}</h1></div>
+      <span class="demo-chip">Demonstração</span>
+    </header>
+    <main class="clinic-content"><router-outlet></router-outlet></main>
+  </div>
+</div>

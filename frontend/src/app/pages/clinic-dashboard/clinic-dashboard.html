@@ -1,0 +1,9 @@
+<section class="page-heading"><span class="kicker">PAINEL DA CLÍNICA</span><h2>Seu espaço de atendimento</h2><p>Organize sua equipe e acompanhe os registros desta demonstração.</p></section>
+<div class="notice">Este espaço é um protótipo: profissionais e atendimentos são mantidos somente até você recarregar a página. Não insira dados reais de pacientes.</div>
+<div class="stats">
+  <a class="stat-card" routerLink="/clinica/profissionais"><span>PROFISSIONAIS</span><strong>{{ demo.professionals().length }}</strong><small>Gerenciar equipe →</small></a>
+  <a class="stat-card" routerLink="/clinica/atendimentos"><span>ATENDIMENTOS</span><strong>{{ demo.attendances().length }}</strong><small>Ver registros →</small></a>
+</div>
+<section class="panel"><div class="panel-heading"><div><span class="kicker">COMECE POR AQUI</span><h3>Fluxo da clínica</h3></div></div>
+  <div class="quick-links"><a routerLink="/clinica/profissionais"><span class="step">01</span><strong>Cadastre um profissional</strong><small>Identifique quem realiza os atendimentos.</small><b>Adicionar →</b></a><a routerLink="/clinica/atendimentos"><span class="step">02</span><strong>Registre um atendimento</strong><small>Anote procedimentos, exames e encaminhamentos.</small><b>Registrar →</b></a></div>
+</section>

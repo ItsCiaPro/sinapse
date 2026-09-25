@@ -9,6 +9,17 @@
       <h2>Faça Login</h2>
 
       <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+         <fieldset class="account-types">
+            <legend>Escolha seu espaço</legend>
+            <label class="account-option" [class.selected]="selectedRole === 'patient'">
+               <input type="radio" name="accountRole" value="patient" [(ngModel)]="selectedRole" required>
+               <span><strong>Paciente</strong><small>Meu histórico e carteirinhas</small></span>
+            </label>
+            <label class="account-option" [class.selected]="selectedRole === 'clinic'">
+               <input type="radio" name="accountRole" value="clinic" [(ngModel)]="selectedRole" required>
+               <span><strong>Clínica</strong><small>Profissionais e atendimentos</small></span>
+            </label>
+         </fieldset>
          <div class="input-group">
             <label for="email">E-mail</label>
             <input type="email" id="email" name="email" [(ngModel)]="email" placeholder="Digite seu e-mail" required>
@@ -20,7 +31,8 @@
                required>
          </div>
 
-         <button type="submit" [disabled]="loading || !loginForm.valid" class="btn">Entrar</button>
+         <button type="submit" [disabled]="loading || !loginForm.valid || !selectedRole" class="btn">Entrar</button>
+         <p class="demo-note">A escolha do espaço é local. O e-mail e a senha precisam pertencer a uma conta válida do Supabase.</p>
 
          <p class="login-link">
             Ainda não tem uma conta? <a routerLink="/register">Cadastre-se</a>

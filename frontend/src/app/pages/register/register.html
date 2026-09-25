@@ -9,6 +9,25 @@
 
       <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
 
+         <fieldset class="account-types">
+            <legend>Como você vai usar o Sinapse?</legend>
+            <label class="account-option" [class.selected]="selectedRole === 'patient'">
+               <input type="radio" name="accountRole" value="patient" [(ngModel)]="selectedRole" required>
+               <span><strong>Sou paciente</strong><small>Organizar meu histórico de saúde</small></span>
+            </label>
+            <label class="account-option" [class.selected]="selectedRole === 'clinic'">
+               <input type="radio" name="accountRole" value="clinic" [(ngModel)]="selectedRole" required>
+               <span><strong>Sou clínica</strong><small>Gerenciar equipe e atendimentos</small></span>
+            </label>
+         </fieldset>
+
+         @if (selectedRole === 'clinic') {
+         <div class="input-group">
+            <label for="clinicName">Nome da clínica</label>
+            <input type="text" id="clinicName" name="clinicName" [(ngModel)]="clinicName" placeholder="Ex.: Clínica Horizonte" required maxlength="80">
+         </div>
+         }
+
          <div class="input-group">
             <label for="email">E-mail</label>
             <input type="email" id="email" name="email" [(ngModel)]="email" placeholder="Digite seu e-mail" required>
@@ -30,7 +49,8 @@
             <label for="acceptTerms">Ao criar uma conta, concordo com o uso das minhas informações para criar e acessar minha conta e declaro ter lido a <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener noreferrer">Lei Geral de Proteção de Dados (LGPD)</a>.</label>
          </div>
 
-         <button type="submit" [disabled]="loading || !registerForm.valid || !acceptedTerms" class="btn">Cadastrar</button>
+         <button type="submit" [disabled]="loading || !registerForm.valid || !acceptedTerms || !selectedRole" class="btn">Cadastrar</button>
+         <p class="demo-note">O tipo de conta é uma simulação salva neste navegador. O cadastro com e-mail e senha continua no Supabase.</p>
 
          <p class="login-link">
             Já tem uma conta? <a routerLink="/login">Faça login</a>

@@ -1,0 +1,22 @@
+<section class="page-heading"><span class="kicker">HISTÓRICO DA CLÍNICA</span><h2>Atendimentos</h2><p>Documente o que aconteceu em consultas, exames, cirurgias e procedimentos.</p></section>
+<div class="notice">Demonstração local. Os registros desaparecem ao recarregar a página; não insira dados reais de saúde.</div>
+<section class="panel"><div class="panel-heading"><div><span class="kicker">REGISTROS</span><h3>Atendimentos realizados <span class="count">{{ demo.attendances().length }}</span></h3></div><button class="primary-button" type="button" (click)="formOpen = !formOpen">{{ formOpen ? 'Fechar formulário' : '+ Novo atendimento' }}</button></div>
+  @if (formOpen) {
+    <form class="entry-form" #attendanceForm="ngForm" (ngSubmit)="save()"><h4>Registrar atendimento</h4>
+      @if (!demo.professionals().length) { <p class="hint">Para registrar um atendimento, <a routerLink="/clinica/profissionais">cadastre primeiro um profissional</a>.</p> }
+      <div class="form-grid">
+        <label>Paciente atendido <input name="patient" [(ngModel)]="draft.patient" required maxlength="100" placeholder="Nome fictício do paciente"></label>
+        <label>Profissional responsável <select name="professional" [(ngModel)]="draft.professionalId" required><option value="" disabled>Selecione um profissional</option>@for (person of demo.professionals(); track person.id) { <option [value]="person.id">{{ person.name }} — {{ person.specialty }}</option> }</select></label>
+        <label>Tipo de atendimento <select name="type" [(ngModel)]="draft.type" required>@for (type of types; track type) { <option [value]="type">{{ type }}</option> }</select></label>
+        <label>Data e horário <input type="datetime-local" name="date" [(ngModel)]="draft.date" required></label>
+        <label class="wide">Local do atendimento <input name="location" [(ngModel)]="draft.location" required maxlength="120" placeholder="Unidade, setor ou sala"></label>
+        <label class="wide">O que foi feito <textarea name="summary" [(ngModel)]="draft.summary" required maxlength="2000" rows="3" placeholder="Descreva o atendimento realizado"></textarea></label>
+        <label>Exames solicitados <textarea name="exams" [(ngModel)]="draft.exams" maxlength="1000" rows="3" placeholder="Exames pedidos, se houver"></textarea></label>
+        <label>Encaminhamentos <textarea name="referrals" [(ngModel)]="draft.referrals" maxlength="1000" rows="3" placeholder="Especialidade ou serviço de destino"></textarea></label>
+        <label class="wide">Observações adicionais <textarea name="notes" [(ngModel)]="draft.notes" maxlength="1000" rows="2" placeholder="Informações complementares"></textarea></label>
+      </div><div class="form-actions"><button class="secondary-button" type="button" (click)="formOpen = false">Cancelar</button><button class="primary-button" type="submit" [disabled]="attendanceForm.invalid || !demo.professionals().length">Salvar atendimento</button></div>
+    </form>
+  }
+  @if (demo.attendances().length) { <div class="card-list">@for (record of demo.attendances(); track record.id) { <article class="attendance-card"><div class="attendance-top"><span class="record-type" [attr.data-type]="record.type">{{ record.type }}</span><time>{{ record.date.replace('T', ' · ') }}</time></div><h4>{{ record.patient }}</h4><p>{{ demo.professionalName(record.professionalId) }} · {{ record.location }}</p><dl><div><dt>Atendimento</dt><dd>{{ record.summary }}</dd></div>@if (record.exams) { <div><dt>Exames solicitados</dt><dd>{{ record.exams }}</dd></div> }@if (record.referrals) { <div><dt>Encaminhamentos</dt><dd>{{ record.referrals }}</dd></div> }@if (record.notes) { <div><dt>Observações</dt><dd>{{ record.notes }}</dd></div> }</dl></article> }</div> }
+  @else { <div class="empty"><strong>Nenhum atendimento registrado</strong><p>Os registros de atendimentos da clínica aparecerão aqui.</p></div> }
+</section>

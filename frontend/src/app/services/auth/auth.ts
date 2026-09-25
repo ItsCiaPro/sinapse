@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { inject } from '@angular/core';
 import { Supabase } from '../supabase';
 import { Router } from '@angular/router';
+import { AccountMode, AccountRole } from '../account-mode';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
   supabaseService = inject(Supabase);
+  accountMode = inject(AccountMode);
 
   errorMessage = '';
   successMessage = '';
@@ -15,7 +17,7 @@ export class Auth {
 
   constructor(private router: Router) { }
 
-  async register(email: string, password: string) {
+  async register(email: string, password: string, role: AccountRole = 'patient', clinicName = '') {
 
     this.errorMessage = '';
     this.successMessage = '';
@@ -23,6 +25,8 @@ export class Auth {
     this.loading = true;
     try {
       await this.supabaseService.signUp(email, password);
+      this.accountMode.rememberRegistration(email, { role, clinicName: role === 'clinic' ? clinicName.trim() : undefined });
+      this.accountMode.setActive(role);
       this.successMessage = 'Registro realizado!';
       this.router.navigate(['/login']);
 
@@ -37,15 +41,16 @@ export class Auth {
     }
   }
 
-  async logIn(email: string, password: string) {
+  async logIn(email: string, password: string, role: AccountRole = 'patient') {
     this.errorMessage = '';
     this.successMessage = '';
 
     this.loading = true;
     try {
       await this.supabaseService.signIn(email, password);
+      this.accountMode.setActive(role);
       this.successMessage = 'Login realizado!';
-      this.router.navigate(['/home']);
+      this.router.navigate([role === 'clinic' ? '/clinica' : '/home']);
 
     } catch (err: any) {
       this.errorMessage = err ?? 'Erro ao fazer login';
@@ -61,6 +66,7 @@ export class Auth {
   async logOut() {
     try {
       await this.supabaseService.signOut();
+      this.accountMode.clearActive();
       this.successMessage = 'Logout realizado!';
       this.router.navigate(['/login']);
     }
