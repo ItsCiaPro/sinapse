@@ -38,8 +38,18 @@
                </a>
             </li>
             <li routerLinkActive="active">
+               <a routerLink="/clinica/pacientes" (click)="isOpen = false">
+                  <img src="imgs/icons/user.svg" class="nav-icon" alt=""><span>Pacientes</span>
+               </a>
+            </li>
+            <li routerLinkActive="active">
                <a routerLink="/clinica/atendimentos" (click)="isOpen = false">
                   <img src="imgs/icons/history.svg" class="nav-icon" alt=""><span>Atendimentos</span>
+               </a>
+            </li>
+            <li routerLinkActive="active">
+               <a routerLink="/clinica/agenda" (click)="isOpen = false">
+                  <img src="imgs/icons/history.svg" class="nav-icon" alt=""><span>Agenda</span>
                </a>
             </li>
             } @else {

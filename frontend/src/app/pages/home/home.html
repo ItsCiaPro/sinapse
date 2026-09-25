@@ -72,9 +72,9 @@
       <h2 class="home-title" id="qr-title">QR Code de compartilhamento</h2>
       @if (activeAccess && qrImage) {
          <div class="active-code">
-            <img [src]="qrImage" alt="QR Code ativo para a página pública de demonstração">
+            <img [src]="qrImage" alt="QR Code para a página pública de acesso">
             <div>
-               <span class="code-badge">Ativo · demonstração</span>
+               <span class="code-badge">Código ativo</span>
                <p>Compartilhe seu histórico com outro aparelho.</p>
                <small>Prazo até {{ activeAccess.expiresAt | date:'dd/MM/yyyy HH:mm' }}</small>
                <a [href]="activeAccess.url" target="_blank" rel="noopener noreferrer">Abrir página do QR ↗</a>

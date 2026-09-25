@@ -14,12 +14,15 @@ import { ClinicLayout } from './layouts/clinic-layout/clinic-layout';
 import { ClinicDashboard } from './pages/clinic-dashboard/clinic-dashboard';
 import { ClinicProfessionals } from './pages/clinic-professionals/clinic-professionals';
 import { ClinicAttendances } from './pages/clinic-attendances/clinic-attendances';
+import { ClinicPatients } from './pages/clinic-patients/clinic-patients';
+import { ClinicAppointments } from './pages/clinic-appointments/clinic-appointments';
 
 export const routes: Routes = [
 
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'register', component: Register, canActivate: [guestGuard] },
     { path: 'login', component: Login, canActivate: [guestGuard] },
+    { path: 'acesso', component: DemoAccessPage },
     { path: 'acesso-demo', component: DemoAccessPage },
 
     {
@@ -28,7 +31,9 @@ export const routes: Routes = [
         children: [
             { path: '', component: ClinicDashboard, data: { title: 'Visão geral' } },
             { path: 'profissionais', component: ClinicProfessionals, data: { title: 'Profissionais' } },
+            { path: 'pacientes', component: ClinicPatients, data: { title: 'Pacientes' } },
             { path: 'atendimentos', component: ClinicAttendances, data: { title: 'Atendimentos' } },
+            { path: 'agenda', component: ClinicAppointments, data: { title: 'Agenda' } },
         ],
     },
 

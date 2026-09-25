@@ -21,7 +21,7 @@ export class DemoShare {
 
   generate(durationHours: number, scopes: string[]): DemoAccess {
     const expiresAt = Date.now() + durationHours * 60 * 60 * 1000;
-    const url = new URL('/acesso-demo', window.location.origin);
+    const url = new URL('/acesso', window.location.origin);
     url.searchParams.set('ate', String(expiresAt));
     url.searchParams.set('itens', scopes.join(','));
     const access = { expiresAt, scopes, url: url.toString() };

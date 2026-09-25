@@ -1,0 +1,36 @@
+<section class="page-heading"><span class="kicker">AGENDA</span><h2>Marcações</h2><p>Agende atendimentos vinculados a pacientes cadastrados, consulte o calendário e ajuste horários.</p></section>
+<div class="notice">As marcações ficam somente nesta sessão e não são gravadas no banco de dados. Não insira informações reais de pacientes.</div>
+<section class="panel"><div class="panel-heading"><div><span class="kicker">CALENDÁRIO</span><h3>Agenda da clínica</h3></div><button type="button" class="primary-button" (click)="openForm()">+ Nova marcação</button></div>
+  @if (formOpen) {
+  <form class="entry-form" #appointmentForm="ngForm" (ngSubmit)="save()"><h4>{{ editingId ? 'Editar marcação' : 'Nova marcação' }}</h4>
+    @if (!clinic.patients().length) { <p class="hint">Cadastre um paciente antes de agendar. <a routerLink="/clinica/pacientes">Ir para pacientes</a></p> }
+    <div class="form-grid">
+      <label>Buscar paciente por nome, CPF ou ID <input name="patientLookup" [(ngModel)]="patientQuery" placeholder="Pesquisar paciente"></label>
+      <label>Paciente <select name="patientId" [(ngModel)]="draft.patientId" (ngModelChange)="patientQuery = ''" required><option value="" disabled>Selecione</option>@for (patient of matchingPatients; track patient.id) { <option [value]="patient.id">{{ patient.name }} · {{ patient.cpf }}</option> }</select></label>
+      <label>Tipo <select name="type" [(ngModel)]="draft.type" required>@for (type of types; track type) { <option [value]="type">{{ type }}</option> }</select></label>
+      <label>Profissional (opcional) <select name="professionalId" [(ngModel)]="draft.professionalId"><option value="">A definir</option>@for (person of clinic.professionals(); track person.id) { <option [value]="person.id">{{ person.name }}</option> }</select></label>
+      <label>Data e horário <input type="datetime-local" name="date" [(ngModel)]="draft.date" [min]="minDateTime" required></label>
+      <label>Local / unidade <input name="location" [(ngModel)]="draft.location" required maxlength="120"></label>
+      <label class="wide">Observações <textarea name="notes" [(ngModel)]="draft.notes" rows="2" maxlength="1000"></textarea></label>
+    </div><div class="form-actions"><button type="button" class="secondary-button" (click)="formOpen = false">Fechar</button><button type="submit" class="primary-button" [disabled]="appointmentForm.invalid || !clinic.patients().length">{{ editingId ? 'Salvar alterações' : 'Agendar' }}</button></div>
+  </form>
+  }
+  <div class="calendar-head"><button type="button" aria-label="Mês anterior" (click)="changeMonth(-1)">‹</button><h4>{{ monthLabel }}</h4><button type="button" aria-label="Próximo mês" (click)="changeMonth(1)">›</button></div>
+  <div class="calendar-grid" role="group" [attr.aria-label]="'Marcações de ' + monthLabel">
+    @for (weekday of weekdays; track weekday) { <span class="weekday">{{ weekday }}</span> }
+    @for (cell of calendarDays; track $index) {
+      @if (cell.key) { <button type="button" class="calendar-day" [class.selected]="selectedDay === cell.key" [class.has-events]="cell.count" [attr.aria-label]="cell.day + ' de ' + monthLabel + ': ' + cell.count + ' marcações'" (click)="selectedDay = cell.key"><strong>{{ cell.day }}</strong>@if (cell.count) { <small>{{ cell.count }}</small> }</button> }
+      @else { <span class="calendar-empty" aria-hidden="true"></span> }
+    }
+  </div>
+  <div class="day-agenda"><h4>Marcações em {{ selectedDay.split('-').reverse().join('/') }}</h4>
+    @for (item of selectedAppointments; track item.id) { <div class="agenda-item"><span class="agenda-time">{{ item.date.slice(11, 16) }}</span><div><strong>{{ clinic.patientName(item.patientId) }}</strong><p>{{ item.type }} · {{ item.location }} · {{ item.status }}</p></div></div> }
+    @empty { <p class="empty-day">Nenhuma marcação nesta data.</p> }
+  </div>
+</section>
+<section class="panel appointment-list"><div class="panel-heading"><div><span class="kicker">TODAS AS MARCAÇÕES</span><h3>Gerenciar agenda <span class="count">{{ clinic.appointments().length }}</span></h3></div></div>
+  @for (item of orderedAppointments; track item.id) { <article class="appointment-card" [class.cancelled]="item.status === 'Cancelado'"><div><span class="record-type" [attr.data-type]="item.type">{{ item.type }}</span><span class="appointment-status">{{ item.status }}</span><h4>{{ clinic.patientName(item.patientId) }}</h4><p>{{ item.date.replace('T', ' · ') }} · {{ item.location }}</p><p>Profissional: {{ item.professionalId ? clinic.professionalName(item.professionalId) : 'A definir' }}</p>@if (item.notes) { <p>{{ item.notes }}</p> }</div>
+      @if (item.status === 'Agendado') { <div class="appointment-actions"><button type="button" class="secondary-button" (click)="openForm(item)">Editar / reagendar</button><button type="button" class="danger-button" (click)="cancel(item)">Cancelar marcação</button></div> }
+    </article> }
+  @empty { <div class="empty"><strong>Nenhuma marcação cadastrada</strong><p>Adicione a primeira marcação pelo botão acima.</p></div> }
+</section>

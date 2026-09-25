@@ -1,9 +1,15 @@
-<section class="page-heading"><span class="kicker">PAINEL DA CLÍNICA</span><h2>Seu espaço de atendimento</h2><p>Organize sua equipe e acompanhe os registros desta demonstração.</p></section>
-<div class="notice">Este espaço é um protótipo: profissionais e atendimentos são mantidos somente até você recarregar a página. Não insira dados reais de pacientes.</div>
-<div class="stats">
-  <a class="stat-card" routerLink="/clinica/profissionais"><span>PROFISSIONAIS</span><strong>{{ demo.professionals().length }}</strong><small>Gerenciar equipe →</small></a>
-  <a class="stat-card" routerLink="/clinica/atendimentos"><span>ATENDIMENTOS</span><strong>{{ demo.attendances().length }}</strong><small>Ver registros →</small></a>
+<section class="page-heading"><span class="kicker">PAINEL DA CLÍNICA</span><h2>Seu espaço de atendimento</h2><p>Organize pacientes, equipe, atendimentos e marcações em um só lugar.</p></section>
+<div class="notice">Os dados desta área ficam somente nesta sessão e não são gravados no banco de dados. Não insira informações reais de pacientes.</div>
+<div class="stats clinic-stats">
+  <a class="stat-card" routerLink="/clinica/pacientes"><span>PACIENTES</span><strong>{{ clinic.patients().length }}</strong><small>Buscar cadastros →</small></a>
+  <a class="stat-card" routerLink="/clinica/profissionais"><span>PROFISSIONAIS</span><strong>{{ clinic.professionals().length }}</strong><small>Gerenciar equipe →</small></a>
+  <a class="stat-card" routerLink="/clinica/atendimentos"><span>ATENDIMENTOS</span><strong>{{ clinic.attendances().length }}</strong><small>Ver registros →</small></a>
+  <a class="stat-card" routerLink="/clinica/agenda"><span>MARCAÇÕES</span><strong>{{ clinic.appointments().length }}</strong><small>Abrir calendário →</small></a>
 </div>
-<section class="panel"><div class="panel-heading"><div><span class="kicker">COMECE POR AQUI</span><h3>Fluxo da clínica</h3></div></div>
-  <div class="quick-links"><a routerLink="/clinica/profissionais"><span class="step">01</span><strong>Cadastre um profissional</strong><small>Identifique quem realiza os atendimentos.</small><b>Adicionar →</b></a><a routerLink="/clinica/atendimentos"><span class="step">02</span><strong>Registre um atendimento</strong><small>Anote procedimentos, exames e encaminhamentos.</small><b>Registrar →</b></a></div>
+<section class="panel timeline-panel"><div class="panel-heading"><div><span class="kicker">PRÓXIMOS DIAS</span><h3>Próximas marcações</h3></div><a class="text-link" routerLink="/clinica/agenda">Ver calendário →</a></div>
+  @for (item of clinic.upcoming().slice(0, 6); track item.id) { <article class="timeline-item"><time>{{ item.date.slice(8, 10) }}/{{ item.date.slice(5, 7) }}<small>{{ item.date.slice(11, 16) }}</small></time><div><strong>{{ clinic.patientName(item.patientId) }}</strong><p>{{ item.type }} · {{ item.location }} · {{ item.professionalId ? clinic.professionalName(item.professionalId) : 'A definir' }}</p></div></article> }
+  @empty { <div class="empty"><strong>Sem marcações próximas</strong><p>Os próximos horários agendados aparecerão aqui.</p></div> }
+</section>
+<section class="panel"><div class="panel-heading"><div><span class="kicker">ACESSO RÁPIDO</span><h3>Organize seus registros</h3></div></div>
+  <div class="quick-links"><a routerLink="/clinica/pacientes"><span class="step">01</span><strong>Cadastre um paciente</strong><small>Guarde os dados para selecionar nos registros.</small><b>Adicionar →</b></a><a routerLink="/clinica/agenda"><span class="step">02</span><strong>Marque um atendimento</strong><small>Consulte o calendário e gerencie horários.</small><b>Agendar →</b></a></div>
 </section>

@@ -17,6 +17,7 @@ export class History {
   history = this.data.getHistory;
   today = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`;
   attachment?: File;
+  expirationDate = '';
   draft: RecordDraft = this.emptyDraft();
 
   count(type: filtros): number { return this.history.filter(record => record.type === type).length; }
@@ -26,6 +27,7 @@ export class History {
     this.draft.mode = mode;
     this.draft.type = mode === 'appointment' ? filtros.consulta : filtros.exame;
     this.attachment = undefined;
+    this.expirationDate = '';
     this.recordDialog?.nativeElement.showModal();
   }
 
@@ -35,8 +37,15 @@ export class History {
 
   saveRecord(): void {
     if (!this.draft.title.trim() || !this.draft.clinician.trim() || !this.draft.location.trim() || !this.draft.date ||
-        (this.draft.mode === 'appointment' && (!this.draft.time || this.draft.type === filtros.prescricao))) return;
+        (this.draft.mode === 'appointment' && (!this.draft.time || this.draft.type === filtros.prescricao)) ||
+        (this.draft.mode === 'result' && this.draft.type === filtros.prescricao && !!this.expirationDate && this.expirationDate < this.draft.date)) return;
     this.data.addRecord(this.draft, this.attachment);
+    if (this.draft.mode === 'result' && this.draft.type === filtros.prescricao && this.expirationDate) {
+      this.history[0].detail.push({
+        name: 'Validade da prescrição',
+        content: new Date(`${this.expirationDate}T12:00:00`).toLocaleDateString('pt-BR'),
+      });
+    }
     this.currentFilter = filtros.tudo;
     this.recordDialog?.nativeElement.close();
   }

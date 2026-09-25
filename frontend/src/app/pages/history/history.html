@@ -121,6 +121,9 @@
             <label>Médico ou profissional responsável<input name="clinician" type="text" [(ngModel)]="draft.clinician" placeholder="Ex.: Dra. Camila Rocha" required maxlength="100"></label>
             <label>Localização / unidade<input name="location" type="text" [(ngModel)]="draft.location" placeholder="Ex.: Clínica Vital, unidade Centro" required maxlength="120"></label>
             <label>{{ draft.mode === 'appointment' ? 'Data agendada' : 'Data do resultado / atendimento' }}<input name="date" type="date" [(ngModel)]="draft.date" [min]="draft.mode === 'appointment' ? today : null" required></label>
+            @if (draft.mode === 'result' && draft.type === filters.prescricao) {
+               <label>Validade da prescrição (opcional)<input name="expirationDate" type="date" [(ngModel)]="expirationDate" [min]="draft.date || null"></label>
+            }
             @if (draft.mode === 'appointment') {
                <label>Horário<input name="time" type="time" [(ngModel)]="draft.time" required></label>
             } @else {

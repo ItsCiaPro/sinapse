@@ -1,5 +1,5 @@
 <section class="page-heading"><span class="kicker">EQUIPE</span><h2>Profissionais</h2><p>Cadastre quem atende na clínica para relacionar os registros à sua equipe.</p></section>
-<div class="notice">Demonstração local. Os dados serão apagados ao recarregar a página; use somente informações fictícias.</div>
+<div class="notice">Os dados desta área ficam somente nesta sessão e não são gravados no banco de dados. Não insira dados reais de profissionais.</div>
 <section class="panel"><div class="panel-heading"><div><span class="kicker">SUA EQUIPE</span><h3>Profissionais cadastrados <span class="count">{{ demo.professionals().length }}</span></h3></div><button class="primary-button" type="button" (click)="formOpen = !formOpen">{{ formOpen ? 'Fechar formulário' : '+ Novo profissional' }}</button></div>
   @if (formOpen) {
     <form class="entry-form" #professionalForm="ngForm" (ngSubmit)="save()"><h4>Adicionar profissional</h4><div class="form-grid">
